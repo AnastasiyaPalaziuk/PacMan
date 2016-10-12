@@ -1,0 +1,31 @@
+﻿<Window x:Class="PacMan.UI.View.PlayGame"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PacMan.UI.View"
+        xmlns:UserControl="clr-namespace:PacMan.UI.View"
+        mc:Ignorable="d"
+        Title="PlayGame" Height="500" Width="500" WindowStyle="None" AllowsTransparency="True" Background="#E5B24141" BorderBrush="Black" BorderThickness="1"
+        Focusable="True"
+        >
+   
+    <Window.InputBindings>
+        <MouseBinding  Command="{Binding DragMove}" MouseAction="LeftClick"/>
+        <!--<MouseBinding Command="{Binding Scale}" MouseAction="LeftDoubleClick"/>-->
+        <KeyBinding Command="{Binding MoveManLeft}" Key="Space"/>
+    </Window.InputBindings>
+    <Grid Focusable="False">
+        <Canvas Height="25" Width="25" Margin="475,0,0,475" Focusable="False">
+            <Canvas.Background>
+                <ImageBrush ImageSource="../Image/Exit.png"></ImageBrush>
+            </Canvas.Background>
+            <Canvas.InputBindings>
+                <MouseBinding Command="{Binding Exit}" MouseAction="LeftClick"></MouseBinding>
+            </Canvas.InputBindings>
+        </Canvas>
+        <Grid  x:Name="CellHost" Margin="25,25,25,25" Height="450" Width="450" Focusable="False">
+        </Grid>
+        
+    </Grid>
+</Window>
