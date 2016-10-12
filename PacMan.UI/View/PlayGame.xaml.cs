@@ -23,7 +23,7 @@ namespace PacMan.UI.View
         public PlayGame()
         {
             InitializeComponent();
-            DataContext = new PlayGameVM(CellHost);
+            DataContext = new PlayGameVM(CanvasHost);
         }
     }
 }

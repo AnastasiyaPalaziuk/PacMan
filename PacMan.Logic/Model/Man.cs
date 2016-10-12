@@ -21,6 +21,7 @@ namespace PacMan.Logic.Model
                 _life = value;
             }
         }
+        public int Score { get; set; }
         public int CurrentCoordinateX { get; set; }
         public int CurrentCoordinateY { get; set; }
 

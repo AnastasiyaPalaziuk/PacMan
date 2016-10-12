@@ -9,11 +9,14 @@
         Title="PlayGame" Height="500" Width="500" WindowStyle="None" AllowsTransparency="True" Background="#E5B24141" BorderBrush="Black" BorderThickness="1"
         Focusable="True"
         >
-   
+
     <Window.InputBindings>
         <MouseBinding  Command="{Binding DragMove}" MouseAction="LeftClick"/>
         <!--<MouseBinding Command="{Binding Scale}" MouseAction="LeftDoubleClick"/>-->
-        <KeyBinding Command="{Binding MoveManLeft}" Key="Space"/>
+        <KeyBinding Command="{Binding MoveManLeft}" Key="Left"/>
+        <KeyBinding Command="{Binding MoveManRight}" Key="Right"/>
+        <KeyBinding Command="{Binding MoveManUp}" Key="Up"/>
+        <KeyBinding Command="{Binding MoveManDown}" Key="Down"/>
     </Window.InputBindings>
     <Grid Focusable="False">
         <Canvas Height="25" Width="25" Margin="475,0,0,475" Focusable="False">
@@ -24,8 +27,9 @@
                 <MouseBinding Command="{Binding Exit}" MouseAction="LeftClick"></MouseBinding>
             </Canvas.InputBindings>
         </Canvas>
-        <Grid  x:Name="CellHost" Margin="25,25,25,25" Height="450" Width="450" Focusable="False">
+        <Label Height="25" Margin="26,0,372,473" Content="{Binding Score}" FontSize="14"/>
+        <Grid  x:Name="CanvasHost" Margin="25,25,25,25" Height="450" Width="450" Focusable="False">
         </Grid>
-        
+
     </Grid>
 </Window>
