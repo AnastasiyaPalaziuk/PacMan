@@ -58,8 +58,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Concrete\CommandHandler.cs" />
+    <Compile Include="ViewModel\LevelVM.cs" />
     <Compile Include="ViewModel\MenuVM.cs" />
     <Compile Include="ViewModel\PlayGameVM.cs" />
+    <Compile Include="View\Level.xaml.cs">
+      <DependentUpon>Level.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\PlayGame.xaml.cs">
       <DependentUpon>PlayGame.xaml</DependentUpon>
     </Compile>
@@ -75,6 +79,10 @@
       <DependentUpon>Menu.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\Level.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\PlayGame.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

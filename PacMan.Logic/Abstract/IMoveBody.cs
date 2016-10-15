@@ -10,10 +10,10 @@ namespace PacMan.Logic.Abstract
 {
     public interface IMoveBody
     {
-        ImageBrush MoveLeft();
-        ImageBrush MoveRight();
-        ImageBrush MoveUp();
-        ImageBrush MoveDown();
+        void StepLeft();
+        void StepRight();
+        void StepUp();
+        void StepDown();
 
     }
 }

@@ -12,8 +12,9 @@ namespace PacMan.Logic.Model
     {
 
         private int _size;
-        private int[,] _boardElement;
-        public int[,] BoardElement
+        private int _qualityBonus;
+        private BoardElements[,] _boardElement;
+        public BoardElements[,] BoardElement
         {
             get
             {
@@ -24,14 +25,31 @@ namespace PacMan.Logic.Model
                 _boardElement = value;
             }
         }
+        public int QualityBonus
+        {
+            get { return _qualityBonus; }
+            set
+            {
+                _qualityBonus = value;
+            }
+        }
         public Board(int size)
         {
             this._size = size;
-            _boardElement = new int[size, size];
+            _boardElement = new BoardElements[size, size];
+            GenerateMap();
+        }
+        public Board(int size, int level)
+        {
+            this._size = size;
+            _boardElement = new BoardElements[size, size];
+            GenerateMap();
+        }
+        public void UpdateBoard()
+        {
             GenerateMap();
 
         }
-
 
         private void GenerateMap()
         {
@@ -42,14 +60,29 @@ namespace PacMan.Logic.Model
                 for (int j = 0; j < _size; j++)
                 {
                     if (i == 0 || j == 0 || i == _size - 1 || j == _size - 1)
-                        _boardElement[i, j] = 0;
+                    {
+                        _boardElement[i, j] = BoardElements.Bonus;
+                        _qualityBonus++;
+                    }
                     else
                     {
-                        if (_boardElement[i - 1, j + 1] == 0 /*&& _boardElement[i - 1, j - 1] == 0*/)
-                            _boardElement[i, j] = (random.Next()) % 2;
+                        if (_boardElement[i - 1, j + 1] == BoardElements.Bonus /*&& _boardElement[i - 1, j - 1] == 0*/)
+                        {
+                            if ((random.Next()) % 2 == 0)
+                            {
+                                _boardElement[i, j] = BoardElements.Bonus;
+                                _qualityBonus++;
 
+                            }
+                            else
+                                _boardElement[i, j] = BoardElements.Wall;
+                        }
                         else
-                            _boardElement[i, j] = 0;
+                        {
+                            _boardElement[i, j] = BoardElements.Bonus;
+                            _qualityBonus++;
+
+                        }
 
                     }
                 }

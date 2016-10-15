@@ -4,31 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Net.Mime;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace PacMan.Logic.Model
 {
-    public class Man : IMoveBody
+    class Enemy : IMoveBody
     {
-        private int _life = 3;
-        public int Life {
-            get { return _life; }
-            set
-            {
-                _life = value;
-            }
-        }
-        public int Score { get; set; }
         public int CurrentCoordinateY { get; set; }
         public int CurrentCoordinateX { get; set; }
-
-        public Man()
-        {
-            
-        }
+        private Random random = new Random();
 
         public void StepLeft()
         {
@@ -46,6 +29,15 @@ namespace PacMan.Logic.Model
         {
             CurrentCoordinateY--;
         }
-
+        public void RandomMoveBody()
+        {
+            switch (random.Next()%4)
+            {
+                case 0:StepDown();break;
+                case 1:StepLeft(); break;
+                case 2:StepRight(); break;
+                case 3:StepUp() ; break;
+            }
+        }
     }
 }

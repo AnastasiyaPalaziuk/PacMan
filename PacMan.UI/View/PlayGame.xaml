@@ -7,7 +7,7 @@
         xmlns:UserControl="clr-namespace:PacMan.UI.View"
         mc:Ignorable="d"
         Title="PlayGame" Height="500" Width="500" WindowStyle="None" AllowsTransparency="True" Background="#E5B24141" BorderBrush="Black" BorderThickness="1"
-        Focusable="True"
+        Focusable="True" WindowStartupLocation="CenterScreen"
         >
 
     <Window.InputBindings>
@@ -27,7 +27,7 @@
                 <MouseBinding Command="{Binding Exit}" MouseAction="LeftClick"></MouseBinding>
             </Canvas.InputBindings>
         </Canvas>
-        <Label Height="25" Margin="26,0,372,473" Content="{Binding Score}" FontSize="14"/>
+        <Label Height="25" Margin="26,0,372,473" Content="{Binding Score, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" FontSize="14"/>
         <Grid  x:Name="CanvasHost" Margin="25,25,25,25" Height="450" Width="450" Focusable="False">
         </Grid>
 
