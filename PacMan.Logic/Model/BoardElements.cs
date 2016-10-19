@@ -11,7 +11,7 @@ namespace PacMan.Logic.Model
         Wall,
         Bonus,
         Way,
-        Enemy,
+        BadBoy,
         Man
     }
 }

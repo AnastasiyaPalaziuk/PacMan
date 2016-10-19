@@ -17,9 +17,11 @@ using System.Windows.Threading;
 
 namespace PacMan.UI.ViewModel
 {
-    class PlayGameVM
+    class PlayGameVM : INotifyPropertyChanged
     {
-        // private object valueLocker = new object();
+        private object valueLocker = new object();
+        private object valueLocker2 = new object();
+
         private bool _canExecute;
         private ICommand _scale;
         private ICommand _dragMove;
@@ -29,16 +31,17 @@ namespace PacMan.UI.ViewModel
         private ICommand _moveManUp;
         private ICommand _moveManDown;
         private int _level = 0;
+        private Random random = new Random();
         //private ICommand _score;
-        public event PropertyChangedEventHandler PropertyChanged;
-        private int _boardSize = 10;
+        public event PropertyChangedEventHandler PropertyChanged = delegate { };
+        private int _boardSize = 5;
         private Grid _CanvasHost;
         private bool gridIsUsed = false;
         private Man _man;
-        private Board board;
-
-        private Bonus bonus;
-
+        private Board _board;
+        private Bonus _bonus;
+        private BadBoy _badBoy;
+        private Thread thread;
         #region Window`s Action
         public ICommand Scale
         {
@@ -83,36 +86,50 @@ namespace PacMan.UI.ViewModel
         }
         private void ExitAction()
         {
-            Menu menu = new Menu();
+            SaveScore saveScore = new SaveScore(_man.Score);
             var currentWin = System.Windows.Application.Current.Windows[0];
             currentWin.Close();
-            menu.Show();
+            saveScore.Show();
+
         }
 
         #endregion
 
+        #region Hide++++++++++++++++++++
+
+
+
         public PlayGameVM(Grid CanvasHost)
         {
 
-
             _canExecute = true;
             _CanvasHost = CanvasHost;
-            bonus = new Bonus();
+            _bonus = new Bonus();
             _man = new Man();
+            _badBoy = new BadBoy()
+            {
+                CurrentCoordinateX = 0,
+                CurrentCoordinateY = 0
+            };
             StartGame();
         }
 
         private void StartGame()
         {
             _level++;
+            RaisePropertyChanged("Level");
             DisplayLevel();
-            if (board == null) board = new Board(_boardSize);
-            else
-                board.UpdateBoard();
+            //if (_board == null) _board = new Board(_boardSize);
+            //else
+            _board = new Board(_boardSize);
+            //_board.UpdateBoard();
             //bonus = new Bonus();
             _man.CurrentCoordinateX = _boardSize / 2;
             _man.CurrentCoordinateY = _boardSize / 2;
             ViewBoard();
+            //thread = new Thread(OneStepBadBoy);
+            //thread.Start();
+
         }
         private void DisplayLevel()
         {
@@ -125,6 +142,7 @@ namespace PacMan.UI.ViewModel
         private void ViewBoard()
         {
             setManOnBoard();
+            //setBadBoysOnBoard();
             setBoardComponents();
 
         }
@@ -149,7 +167,7 @@ namespace PacMan.UI.ViewModel
                 for (int i = 0; i < _boardSize; i++)
                 {
                     Canvas c = new Canvas();
-                    switch (board.BoardElement[i, j])
+                    switch (_board.BoardElement[i, j])
                     {
                         case BoardElements.Way:
                             c.Background = new SolidColorBrush(Colors.White);
@@ -161,6 +179,8 @@ namespace PacMan.UI.ViewModel
                             c.Background = new SolidColorBrush(Colors.Red); break;
                         case BoardElements.Man:
                             c.Background = new SolidColorBrush(Colors.Yellow); break;
+                        case BoardElements.BadBoy:
+                            c.Background = new SolidColorBrush(Colors.Green); break;
                     }
 
                     Grid.SetColumn(c, i);
@@ -185,9 +205,20 @@ namespace PacMan.UI.ViewModel
         }
         private void setManOnBoard()
         {
-            if (board.BoardElement[_man.CurrentCoordinateY, _man.CurrentCoordinateX] == BoardElements.Bonus)
-                board.QualityBonus--;
-            board.BoardElement[_man.CurrentCoordinateY, _man.CurrentCoordinateX] = BoardElements.Man;
+            if (_board.BoardElement[_man.CurrentCoordinateY, _man.CurrentCoordinateX] == BoardElements.Bonus)
+                _board.QualityBonus--;
+            _board.BoardElement[_man.CurrentCoordinateY, _man.CurrentCoordinateX] = BoardElements.Man;
+            //var Item = _CanvasHost.Children
+            //    .Cast<UIElement>()
+            //    .FirstOrDefault(i => Grid.GetColumn(i) == _man.CurrentCoordinateY && Grid.GetRow(i) == _man.CurrentCoordinateX);
+            //((Canvas)Item).Background = new SolidColorBrush(Colors.Yellow);
+
+
+        }
+        private void setBadBoysOnBoard()
+        {
+            _board.QualityBonus--;
+            _board.BoardElement[_badBoy.CurrentCoordinateY, _badBoy.CurrentCoordinateX] = BoardElements.BadBoy;
             //var Item = _CanvasHost.Children
             //    .Cast<UIElement>()
             //    .FirstOrDefault(i => Grid.GetColumn(i) == _man.CurrentCoordinateY && Grid.GetRow(i) == _man.CurrentCoordinateX);
@@ -197,43 +228,65 @@ namespace PacMan.UI.ViewModel
         }
 
 
-        private void ChangeColor(int i, int j, SolidColorBrush color)
+        private void ChangeElementColor(int i, int j, SolidColorBrush color)
         {
-            var Item = _CanvasHost.Children
+            Object obj = new object();
+            lock (obj)
+            {
+                var Item = _CanvasHost.Children
 .Cast<UIElement>()
 .FirstOrDefault(item => Grid.GetColumn(item) == j && Grid.GetRow(item) == i);
-            ((Canvas)Item).Background = color;
+                ((Canvas)Item).Background = color;
+            }
+        }
 
+        private SolidColorBrush ChangeColor(BoardElements element)
+        {
+            switch (element)
+            {
+                case BoardElements.BadBoy:
+                    return new SolidColorBrush(Colors.Green);
+                case BoardElements.Bonus:
+                    return new SolidColorBrush(Colors.Red);
+                case BoardElements.Man:
+                    return new SolidColorBrush(Colors.Yellow);
+                case BoardElements.Way:
+                    return new SolidColorBrush(Colors.White);
+                case BoardElements.Wall:
+                    return new SolidColorBrush(Colors.Black);
+                default: return new SolidColorBrush(Colors.Brown);
+            }
 
         }
-        
+
         #region Commands for move Man
         public ICommand MoveManLeft
         {
             get
             {
-                return _moveManLeft ?? (_moveManLeft = new CommandHandler(() => MoveAction(KeyPress.Left), _canExecute));
+                return _moveManLeft ?? (_moveManLeft = new CommandHandler(() => MoveAction(Side.Left), _canExecute));
             }
         }
         public ICommand MoveManRight
         {
             get
             {
-                return _moveManRight ?? (_moveManRight = new CommandHandler(() => MoveAction(KeyPress.Right), _canExecute));
+                return _moveManRight ?? (_moveManRight = new CommandHandler(() => MoveAction(Side.Right), _canExecute));
             }
         }
         public ICommand MoveManDown
         {
             get
             {
-                return _moveManDown ?? (_moveManDown = new CommandHandler(() => MoveAction(KeyPress.Down), _canExecute));
+                return _moveManDown ?? (_moveManDown = new CommandHandler(() => MoveAction(Side.Down), _canExecute));
             }
         }
         public ICommand MoveManUp
         {
+
             get
             {
-                return _moveManUp ?? (_moveManUp = new CommandHandler(() => MoveAction(KeyPress.Up), _canExecute));
+                return _moveManUp ?? (_moveManUp = new CommandHandler(() => MoveAction(Side.Up), _canExecute));
             }
         }
 
@@ -241,30 +294,47 @@ namespace PacMan.UI.ViewModel
 
 
         #region Move Man
-        private void MoveAction(KeyPress key)
+        private bool isPressedLeft = true;
+        private void MoveActionLeft()
+        {
+
+            Thread.Sleep(400);
+            if (_man.CurrentCoordinateX != 0 && CheckCell(_board.BoardElement[_man.CurrentCoordinateX - 1, _man.CurrentCoordinateY]))
+                OneStep(Side.Left);
+            else
+                isPressedLeft = false;
+
+        }
+
+        private void MoveAction(Side key)
         {
             switch (key)
             {
-                case KeyPress.Left:
-
-                    if (_man.CurrentCoordinateX != 0 && CheckCell(board.BoardElement[_man.CurrentCoordinateX - 1, _man.CurrentCoordinateY]))
-                        OneStep(KeyPress.Left);
+                case Side.Left:
+                    if (_man.CurrentCoordinateX != 0 && CheckCell(_board.BoardElement[_man.CurrentCoordinateX - 1, _man.CurrentCoordinateY]))
+                    {
+                        //thread = new Thread(new ParameterizedThreadStart(OneStep));
+                        //thread.Name = "MyThread";
+                        //thread.Start(Side.Left);
+                        OneStep(Side.Left);
+                    }
                     break;
-                case KeyPress.Right:
-                    if (_man.CurrentCoordinateX != _boardSize - 1 && CheckCell(board.BoardElement[_man.CurrentCoordinateX + 1, _man.CurrentCoordinateY]))
-                        OneStep(KeyPress.Right);
+                case Side.Right:
+                    if (_man.CurrentCoordinateX != _boardSize - 1 && CheckCell(_board.BoardElement[_man.CurrentCoordinateX + 1, _man.CurrentCoordinateY]))
+                        OneStep(Side.Right);
                     break;
-                case KeyPress.Up:
-                    if (_man.CurrentCoordinateY != 0 && CheckCell(board.BoardElement[_man.CurrentCoordinateX, _man.CurrentCoordinateY - 1]))
-                        OneStep(KeyPress.Up);
+                case Side.Up:
+                    if (_man.CurrentCoordinateY != 0 && CheckCell(_board.BoardElement[_man.CurrentCoordinateX, _man.CurrentCoordinateY - 1]))
+                        OneStep(Side.Up);
                     break;
-                case KeyPress.Down:
-                    if (_man.CurrentCoordinateY != _boardSize - 1 && CheckCell(board.BoardElement[_man.CurrentCoordinateX, _man.CurrentCoordinateY + 1]))
-                        OneStep(KeyPress.Down);
+                case Side.Down:
+                    if (_man.CurrentCoordinateY != _boardSize - 1 && CheckCell(_board.BoardElement[_man.CurrentCoordinateX, _man.CurrentCoordinateY + 1]))
+                        OneStep(Side.Down);
                     break;
             }
-            if (board.QualityBonus == 0)
+            if (_board.QualityBonus == 0)
                 StartGame();
+
         }
         private bool CheckCell(BoardElements boardElement)
         {
@@ -273,8 +343,9 @@ namespace PacMan.UI.ViewModel
                 case BoardElements.Way:
                     break;
                 case BoardElements.Bonus:
-                    _man.Score += bonus.Value;
-                    board.QualityBonus--;
+                    _man.Score += _bonus.Value;
+                    _board.QualityBonus--;
+                    RaisePropertyChanged("Score");
                     break;
                 case BoardElements.Wall: return false;
             }
@@ -282,31 +353,48 @@ namespace PacMan.UI.ViewModel
         }
 
 
-        private void OneStep(KeyPress key)
+        private void OneStep(object key)
         {
-            OldCell();
-            switch (key)
+            Side sideKey = (Side)key;
+            OldCellForMan();
+            switch (sideKey)
             {
-                case KeyPress.Left:
+                case Side.Left:
                     _man.StepLeft();
                     break;
-                case KeyPress.Right:
+                case Side.Right:
                     _man.StepRight();
                     break;
-                case KeyPress.Up:
+                case Side.Up:
                     _man.StepUp();
                     break;
-                case KeyPress.Down:
+                case Side.Down:
                     _man.StepDown();
                     break;
             }
-            NewCell();
+
+            NewCellForMan();
+            //  Thread.Sleep(400);
+
         }
 
+        private void OldCellForMan()
+        {
+
+            _board.BoardElement[_man.CurrentCoordinateX, _man.CurrentCoordinateY] = BoardElements.Way;
+            ChangeElementColor(_man.CurrentCoordinateY, _man.CurrentCoordinateX, ChangeColor(BoardElements.Way));
+        }
+        private void NewCellForMan()
+        {
+
+            _board.BoardElement[_man.CurrentCoordinateX, _man.CurrentCoordinateY] = BoardElements.Man;
+            ChangeElementColor(_man.CurrentCoordinateY, _man.CurrentCoordinateX, ChangeColor(BoardElements.Man));
+
+        }
 
         #endregion
 
-
+        #endregion
         public string Score
         {
             get
@@ -316,16 +404,70 @@ namespace PacMan.UI.ViewModel
 
         }
 
-        private void OldCell()
+        public void RaisePropertyChanged(string propertyName)
         {
-            board.BoardElement[_man.CurrentCoordinateX, _man.CurrentCoordinateY] = BoardElements.Way;
-            ChangeColor(_man.CurrentCoordinateY, _man.CurrentCoordinateX, new SolidColorBrush(Colors.White));
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
-        private void NewCell()
-        {
-            board.BoardElement[_man.CurrentCoordinateX, _man.CurrentCoordinateY] = BoardElements.Man;
-            ChangeColor(_man.CurrentCoordinateY, _man.CurrentCoordinateX, new SolidColorBrush(Colors.Yellow));
 
+        #region Move Bad Boy
+
+        private void OneStepBadBoy()
+        {
+            OldCellForBadBoy();
+            RandomMoveBodyBadBoy();
+            NewCellForBadBoy();
+        }
+        private void OldCellForBadBoy()
+        {
+            _board.BoardElement[_badBoy.CurrentCoordinateX, _badBoy.CurrentCoordinateY] = _badBoy.LastStep;
+            ChangeElementColor(_badBoy.CurrentCoordinateY, _badBoy.CurrentCoordinateX, ChangeColor(_badBoy.LastStep));
+        }
+        private void NewCellForBadBoy()
+        {
+            _board.BoardElement[_badBoy.CurrentCoordinateX, _badBoy.CurrentCoordinateY] = BoardElements.BadBoy;
+            ChangeElementColor(_badBoy.CurrentCoordinateY, _badBoy.CurrentCoordinateX, ChangeColor(BoardElements.BadBoy));
+
+        }
+        private void RandomMoveBodyBadBoy()
+        {
+            switch (random.Next() % 4)
+            {
+                case 0:
+                    if (_badBoy.CurrentCoordinateY != _boardSize - 1)
+                    {
+                        _badBoy.LastStep = _board.BoardElement[_badBoy.CurrentCoordinateX, _badBoy.CurrentCoordinateY + 1];
+                        _badBoy.StepDown();
+                    }
+                    break;
+                case 1:
+                    if (_badBoy.CurrentCoordinateX != 0)
+                    {
+                        _badBoy.LastStep = _board.BoardElement[_badBoy.CurrentCoordinateX - 1, _badBoy.CurrentCoordinateY];
+                        _badBoy.StepLeft();
+
+                    }
+                    break;
+                case 2:
+                    if (_badBoy.CurrentCoordinateX != _boardSize - 1)
+                    {
+                        _badBoy.LastStep = _board.BoardElement[_badBoy.CurrentCoordinateX + 1, _badBoy.CurrentCoordinateY];
+                        _badBoy.StepRight();
+                    }
+                    break;
+                case 3:
+                    if (_badBoy.CurrentCoordinateY != 0)
+                    {
+                        _badBoy.LastStep = _board.BoardElement[_badBoy.CurrentCoordinateX, _badBoy.CurrentCoordinateY - 1];
+                        _badBoy.StepUp();
+                    }
+                    break;
+            }
+        }
+        #endregion
+        public string Level
+        {
+            get { return "Level: " + _level; }
         }
 
     }

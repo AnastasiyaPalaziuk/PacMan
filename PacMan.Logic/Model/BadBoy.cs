@@ -7,37 +7,42 @@ using System.Threading.Tasks;
 
 namespace PacMan.Logic.Model
 {
-    class Enemy : IMoveBody
+    public class BadBoy : IMoveBody
     {
         public int CurrentCoordinateY { get; set; }
         public int CurrentCoordinateX { get; set; }
-        private Random random = new Random();
-
+        private BoardElements _lastStep = BoardElements.Bonus;
+        public BadBoy()
+        {
+        }
         public void StepLeft()
         {
-            CurrentCoordinateX--;
+                CurrentCoordinateX--;
         }
         public void StepRight()
         {
-            CurrentCoordinateX++;
+                CurrentCoordinateX++;
         }
         public void StepDown()
         {
-            CurrentCoordinateY++;
+                CurrentCoordinateY++;
         }
         public void StepUp()
         {
-            CurrentCoordinateY--;
+                CurrentCoordinateY--;
         }
-        public void RandomMoveBody()
+        public BoardElements LastStep
         {
-            switch (random.Next()%4)
+            get
             {
-                case 0:StepDown();break;
-                case 1:StepLeft(); break;
-                case 2:StepRight(); break;
-                case 3:StepUp() ; break;
+                return _lastStep;
+                
             }
+            set
+            {
+                _lastStep = value;
+            }
+
         }
     }
 }

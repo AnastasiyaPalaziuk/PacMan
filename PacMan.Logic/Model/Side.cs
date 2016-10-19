@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PacMan.Logic.Model
 {
-    public enum KeyPress
+    public enum Side
     {
         Left,
         Right,

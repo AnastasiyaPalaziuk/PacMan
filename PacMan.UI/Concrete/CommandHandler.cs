@@ -18,9 +18,12 @@ namespace PacMan.UI.Concrete
             _canExecute = canExecute;
         }
 
-        public bool CanExecute(object parameter)
-        {
-            return _canExecute;
+        public bool CanExecute {
+            get
+            {
+                return _canExecute;
+            }
+            set { _canExecute = value; }
         }
 
         public event EventHandler CanExecuteChanged;
@@ -28,6 +31,11 @@ namespace PacMan.UI.Concrete
         public void Execute(object parameter)
         {
             _action();
+        }
+
+        bool ICommand.CanExecute(object parameter)
+        {
+            return _canExecute;
         }
     }
 }

@@ -27,9 +27,10 @@
                 <MouseBinding Command="{Binding Exit}" MouseAction="LeftClick"></MouseBinding>
             </Canvas.InputBindings>
         </Canvas>
-        <Label Height="25" Margin="26,0,372,473" Content="{Binding Score, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" FontSize="14"/>
+        <TextBlock Height="25" Margin="26,0,372,473" Text="{Binding Path=Score, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" FontSize="14"/>
         <Grid  x:Name="CanvasHost" Margin="25,25,25,25" Height="450" Width="450" Focusable="False">
         </Grid>
+        <TextBlock Margin="26,470,390,0" Text="{Binding Path=Level, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" FontSize="14"/>
 
     </Grid>
 </Window>

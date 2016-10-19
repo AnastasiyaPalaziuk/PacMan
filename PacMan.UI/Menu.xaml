@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PacMan.UI"
         mc:Ignorable="d"
-        Title="Menu"  Height="400" Width="350" AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize" BorderBrush="Black" BorderThickness="1" Background="#E5141414"
+        Title="Menu"  Height="270" Width="350" AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize" BorderBrush="Black" BorderThickness="1" Background="#E5141414"
         WindowStartupLocation="CenterScreen">
     
     <Window.InputBindings>
@@ -15,9 +15,6 @@
     <Grid>
         <Button x:Name="btn_StarGame" Content="Start" HorizontalAlignment="Left" Height="50" Margin="50,40,0,0" VerticalAlignment="Top" Width="250" Command="{Binding StartGame}"/>
         <Button x:Name="btn_Score" Content="Score" HorizontalAlignment="Left" Height="50" Margin="50,110,0,0" VerticalAlignment="Top" Width="250"/>
-        <Button x:Name="btn_Instraction" Content="How play?" HorizontalAlignment="Left" Height="50" Margin="50,180,0,0" VerticalAlignment="Top" Width="250"/>
-        <Button x:Name="btn_Settings" Content="Settings" HorizontalAlignment="Left" Height="50" Margin="50,250,0,0" VerticalAlignment="Top" Width="250"/>
-        <Button x:Name="btn_Exit" Content="Exit" HorizontalAlignment="Left" Height="50" Margin="50,320,0,0" VerticalAlignment="Top" Width="250" Command="{Binding Exit}"/>
-
+        <Button x:Name="btn_Exit" Content="Exit" HorizontalAlignment="Left" Height="50" Margin="50,180,0,0" VerticalAlignment="Top" Width="250" Command="{Binding Exit}"/>
     </Grid>
 </Window>

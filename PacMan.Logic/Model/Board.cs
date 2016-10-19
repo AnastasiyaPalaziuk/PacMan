@@ -12,7 +12,7 @@ namespace PacMan.Logic.Model
     {
 
         private int _size;
-        private int _qualityBonus;
+        private int _qualityBonus=0;
         private BoardElements[,] _boardElement;
         public BoardElements[,] BoardElement
         {

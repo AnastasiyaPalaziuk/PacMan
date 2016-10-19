@@ -35,7 +35,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -61,11 +70,18 @@
     <Compile Include="ViewModel\LevelVM.cs" />
     <Compile Include="ViewModel\MenuVM.cs" />
     <Compile Include="ViewModel\PlayGameVM.cs" />
+    <Compile Include="ViewModel\SaveScoreVM.cs" />
     <Compile Include="View\Level.xaml.cs">
       <DependentUpon>Level.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\PlayGame.xaml.cs">
       <DependentUpon>PlayGame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SaveScore.xaml.cs">
+      <DependentUpon>SaveScore.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ScoreView.xaml.cs">
+      <DependentUpon>ScoreView.xaml</DependentUpon>
     </Compile>
     <Page Include="Menu.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -84,6 +100,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\PlayGame.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SaveScore.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ScoreView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -106,6 +130,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -117,6 +142,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\PacMan.Domain\PacMan.Domain.csproj">
+      <Project>{df3ccab8-945e-45fa-9d5d-daa2812d74e0}</Project>
+      <Name>PacMan.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PacMan.Logic\PacMan.Logic.csproj">
       <Project>{ff36ec27-9176-4507-ab0b-51ee4d533fe4}</Project>
       <Name>PacMan.Logic</Name>

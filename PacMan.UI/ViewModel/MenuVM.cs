@@ -63,7 +63,7 @@ namespace PacMan.UI.ViewModel
 
         private void StartGameAction()
         {
-            var currentWin = Application.Current.Windows[0];
+                var currentWin = Application.Current.Windows[0];
             currentWin.Hide();
 
             PlayGame start = new PlayGame();
