@@ -5,8 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PacMan.UI.View"
         mc:Ignorable="d"
-        Title="ScoreView" Height="300" Width="300">
+        Title="ScoreView" Height="300" Width="250"  WindowStyle="None" AllowsTransparency="True" Background="#E5B24141" BorderBrush="Black" BorderThickness="1"
+        Focusable="True" WindowStartupLocation="CenterScreen">
+    <Window.InputBindings>
+        <MouseBinding  Command="{Binding DragMove}" MouseAction="LeftClick"/>
+    </Window.InputBindings>
     <Grid>
-        
+        <Canvas Height="25" Width="25" Margin="223,0,0,273" Focusable="False">
+            <Canvas.Background>
+                <ImageBrush ImageSource="../Image/Exit.png"></ImageBrush>
+            </Canvas.Background>
+            <Canvas.InputBindings>
+                <MouseBinding Command="{Binding Exit}" MouseAction="LeftClick"></MouseBinding>
+            </Canvas.InputBindings>
+        </Canvas>
+
+        <DataGrid Name="PlayersScore" Margin="25" AutoGenerateColumns="True" CanUserAddRows="False" >
+            
+        </DataGrid>
     </Grid>
 </Window>

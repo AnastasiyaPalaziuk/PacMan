@@ -13,7 +13,7 @@ using System.Windows.Shapes;
 
 namespace PacMan.UI.ViewModel
 {
-    class MenuVM 
+    class MenuVM
     {
         public MenuVM()
         {
@@ -42,7 +42,7 @@ namespace PacMan.UI.ViewModel
         {
             get
             {
-                return _dragMove ?? (_dragMove = new CommandHandler(() => DragMoveAction(),_canExecute));
+                return _dragMove ?? (_dragMove = new CommandHandler(() => DragMoveAction(), _canExecute));
             }
         }
 
@@ -50,7 +50,7 @@ namespace PacMan.UI.ViewModel
         {
             var currentWin = Application.Current.Windows[0];
             currentWin.DragMove();
-                
+
         }
 
         public ICommand StartGame
@@ -63,15 +63,35 @@ namespace PacMan.UI.ViewModel
 
         private void StartGameAction()
         {
-                var currentWin = Application.Current.Windows[0];
+            var currentWin = Application.Current.Windows[0];
             currentWin.Hide();
 
             PlayGame start = new PlayGame();
-           
+
 
             start.Show();
             currentWin.Close();
         }
 
+        public ICommand Score
+        {
+            get
+            {
+                return _score ?? (_score = new CommandHandler(ShowAction, _canExecute));
+            }
+        }
+
+        private void ShowAction()
+        {
+            var currentWin = Application.Current.Windows[0];
+            currentWin.Hide();
+
+            ScoreView scoreView = new ScoreView();
+
+
+            scoreView.Show();
+            currentWin.Close();
+
+        }
     }
 }

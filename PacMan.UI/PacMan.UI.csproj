@@ -71,6 +71,7 @@
     <Compile Include="ViewModel\MenuVM.cs" />
     <Compile Include="ViewModel\PlayGameVM.cs" />
     <Compile Include="ViewModel\SaveScoreVM.cs" />
+    <Compile Include="ViewModel\ScoreViewVM.cs" />
     <Compile Include="View\Level.xaml.cs">
       <DependentUpon>Level.xaml</DependentUpon>
     </Compile>
@@ -153,9 +154,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Image\Exit.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Image\Man.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

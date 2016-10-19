@@ -11,7 +11,7 @@ namespace PacMan.Domain.Concrete
     public class EFPlayerRepository : IPlayerRepository
     {
         private EFDbContext context = new EFDbContext();
-        public IEnumerable<Player> Products
+        public IEnumerable<Player> Players
         {
             get
             {

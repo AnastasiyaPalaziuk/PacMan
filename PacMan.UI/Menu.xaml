@@ -14,7 +14,7 @@
     </Window.InputBindings>
     <Grid>
         <Button x:Name="btn_StarGame" Content="Start" HorizontalAlignment="Left" Height="50" Margin="50,40,0,0" VerticalAlignment="Top" Width="250" Command="{Binding StartGame}"/>
-        <Button x:Name="btn_Score" Content="Score" HorizontalAlignment="Left" Height="50" Margin="50,110,0,0" VerticalAlignment="Top" Width="250"/>
+        <Button x:Name="btn_Score" Content="Score" HorizontalAlignment="Left" Height="50" Margin="50,110,0,0" VerticalAlignment="Top" Width="250" Command="{Binding Score}"/>
         <Button x:Name="btn_Exit" Content="Exit" HorizontalAlignment="Left" Height="50" Margin="50,180,0,0" VerticalAlignment="Top" Width="250" Command="{Binding Exit}"/>
     </Grid>
 </Window>
