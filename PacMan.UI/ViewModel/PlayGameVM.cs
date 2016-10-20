@@ -142,7 +142,7 @@ namespace PacMan.UI.ViewModel
         private void ViewBoard()
         {
             setManOnBoard();
-            //setBadBoysOnBoard();
+            setBadBoysOnBoard();
             setBoardComponents();
 
         }
@@ -203,6 +203,7 @@ namespace PacMan.UI.ViewModel
                 }
             }
         }
+
         private void setManOnBoard()
         {
             if (_board.BoardElement[_man.CurrentCoordinateY, _man.CurrentCoordinateX] == BoardElements.Bonus)
@@ -227,17 +228,16 @@ namespace PacMan.UI.ViewModel
 
         }
 
-
         private void ChangeElementColor(int i, int j, SolidColorBrush color)
         {
             Object obj = new object();
-            lock (obj)
+            Dispatcher.CurrentDispatcher.Invoke(new Action(() =>
             {
-                var Item = _CanvasHost.Children
-.Cast<UIElement>()
-.FirstOrDefault(item => Grid.GetColumn(item) == j && Grid.GetRow(item) == i);
-                ((Canvas)Item).Background = color;
-            }
+                var Item =
+                    _CanvasHost.Children.Cast<UIElement>()
+                        .FirstOrDefault(item => Grid.GetColumn(item) == j && Grid.GetRow(item) == i);
+                ((Canvas) Item).Background = color;
+            }));
         }
 
         private SolidColorBrush ChangeColor(BoardElements element)
@@ -313,9 +313,7 @@ namespace PacMan.UI.ViewModel
                 case Side.Left:
                     if (_man.CurrentCoordinateX != 0 && CheckCell(_board.BoardElement[_man.CurrentCoordinateX - 1, _man.CurrentCoordinateY]))
                     {
-                        //thread = new Thread(new ParameterizedThreadStart(OneStep));
-                        //thread.Name = "MyThread";
-                        //thread.Start(Side.Left);
+                        OneStepBadBoy();
                         OneStep(Side.Left);
                     }
                     break;

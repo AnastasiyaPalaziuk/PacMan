@@ -13,39 +13,35 @@ namespace PacMan.Logic.Model
 {
     public class Man : IMoveBody
     {
-        private int _life = 3;
-        public int Life {
-            get { return _life; }
-            set
-            {
-                _life = value;
-            }
-        }
+        public int Life { get; set; } = 3;
+
         public int Score { get; set; }
+
         public int CurrentCoordinateY { get; set; }
         public int CurrentCoordinateX { get; set; }
 
         public Man()
         {
-            
         }
 
         public void StepLeft()
         {
             CurrentCoordinateX--;
         }
+
         public void StepRight()
         {
             CurrentCoordinateX++;
         }
+
         public void StepDown()
         {
             CurrentCoordinateY++;
         }
+
         public void StepUp()
         {
             CurrentCoordinateY--;
         }
-
     }
 }
