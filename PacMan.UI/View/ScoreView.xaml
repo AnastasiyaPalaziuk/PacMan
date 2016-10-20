@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PacMan.UI.View"
         mc:Ignorable="d"
-        Title="ScoreView" Height="300" Width="250"  WindowStyle="None" AllowsTransparency="True" Background="#E5B24141" BorderBrush="Black" BorderThickness="1"
-        Focusable="True" WindowStartupLocation="CenterScreen">
+        Title="ScoreView" Height="300" Width="250"  WindowStyle="None" AllowsTransparency="True" BorderBrush="Black" BorderThickness="1"
+        Focusable="True" WindowStartupLocation="CenterScreen" Background="#E5141414">
     <Window.InputBindings>
         <MouseBinding  Command="{Binding DragMove}" MouseAction="LeftClick"/>
     </Window.InputBindings>
@@ -20,7 +20,7 @@
             </Canvas.InputBindings>
         </Canvas>
 
-        <DataGrid Name="PlayersScore" Margin="25" AutoGenerateColumns="True" CanUserAddRows="False" >
+        <DataGrid Name="PlayersScore" Margin="25"  AutoGenerateColumns="True" CanUserAddRows="False" RowBackground="#E5250909" Foreground="White" BorderBrush="#FFD7DEE4" >
             
         </DataGrid>
     </Grid>

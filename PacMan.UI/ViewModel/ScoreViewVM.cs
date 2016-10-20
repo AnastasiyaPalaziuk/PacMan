@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace PacMan.UI.ViewModel
 {
@@ -17,10 +18,12 @@ namespace PacMan.UI.ViewModel
         private DataGrid _PlayersScore;
         private ICommand _exit;
         private bool _canExecute;
+        private ICommand _dragMove;
 
         public ScoreViewVM(DataGrid PlayersScore)
         {
             _PlayersScore = PlayersScore;
+           // _PlayersScore.RowBackground = (Color)ColorConverter.ConvertFromString("#E5250909");
             _canExecute = true;
             RelationshipDbAndDataGrid();
         }
@@ -34,6 +37,17 @@ namespace PacMan.UI.ViewModel
                                 select new { player.Name, player.Score};
             _PlayersScore.ItemsSource = SortedPlayers;
         }
+        public ICommand DragMove
+        {
+            get
+            {
+                return _dragMove ?? (_dragMove = new CommandHandler(() => DragMoveAction(), _canExecute));
+            }
+        }
+
+  
+
+
         public ICommand Exit
         {
             get
@@ -43,8 +57,11 @@ namespace PacMan.UI.ViewModel
         }
         private void ExitAction()
         {
+            Menu menu = new Menu();
             var currentWin = System.Windows.Application.Current.Windows[0];
             currentWin.Close();
+            menu.Show();
+
 
         }
         private void DragMoveAction()

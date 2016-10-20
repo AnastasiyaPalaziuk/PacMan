@@ -34,7 +34,7 @@ namespace PacMan.UI.ViewModel
         private Random random = new Random();
         //private ICommand _score;
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
-        private int _boardSize = 5;
+        private int _boardSize = 20;
         private Grid _CanvasHost;
         private bool gridIsUsed = false;
         private Man _man;

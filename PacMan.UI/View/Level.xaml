@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PacMan.UI.View"
         mc:Ignorable="d"
-        Title="Level" Height="50" Width="300" WindowStyle="None" AllowsTransparency="True" Background="#E5142A63" 
+        Title="Level" Height="50" Width="300" WindowStyle="None" AllowsTransparency="True" Background="#E5141414" Foreground="White" 
         WindowStartupLocation="CenterScreen">
     <Grid>
         <Label FontSize="20" Content="{Binding DisplayLevel}" Background="#80B66969"></Label>
