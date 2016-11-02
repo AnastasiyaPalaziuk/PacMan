@@ -10,7 +10,7 @@ namespace PacMan.Domain
 {
     public class EFDbContext : DbContext
     {
-        public EFDbContext() : base()
+        public EFDbContext() : base("ScoreDbConnection")
         {
         }
 

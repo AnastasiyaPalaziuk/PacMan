@@ -8,7 +8,7 @@ namespace PacMan.UI.Abstract
 {
    public interface IBadBoyMoveAlgorithm
     {
-        void Steping(int i);
-        void Steping();
+        void Stepping(int i);
+        void Stepping();
     }
 }

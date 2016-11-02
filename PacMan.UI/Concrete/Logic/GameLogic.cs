@@ -15,7 +15,7 @@ namespace PacMan.UI.Concrete.Logic
     {
         private MoveMan _moveMan;
         private MoveBadBoy[] _moveBadBoy;
-        private static int _badBoyQuality = 1;
+        private static int _badBoyQuality =3;
         private int _level = 0;
         private Grid _CanvasHost;
         private bool gridIsUsed = false;
@@ -66,9 +66,14 @@ namespace PacMan.UI.Concrete.Logic
 
             }
             _moveBadBoy[0].SetCoordinates(0, 0);
+            _moveBadBoy[1].SetCoordinates(_boardSize - 1, _boardSize - 1);
+            _moveBadBoy[2].SetCoordinates(0, _boardSize - 1);
 
-            //_moveBadBoy[1].SetCoordinates(_boardSize - 1, 0);
-            //_moveBadBoy[2].SetCoordinates(0, _boardSize - 1);
+            for (int i = 0; i < _badBoyQuality; i++)
+            {
+                _board.AddComponents(_moveBadBoy[0].GetCurrentX(), _moveBadBoy[0].GetCurrentY(), BoardElements.BadBoy);
+
+            }
         }
         private void RunParallelThread()
         {
@@ -94,22 +99,17 @@ namespace PacMan.UI.Concrete.Logic
         {
             while (_board.QualityBonus > 0)
             {
-                Thread.Sleep(500);
+                Thread.Sleep(300);
                 for (int i = 0; i < _badBoyQuality; i++)
                 {
-                    _moveBadBoy[i].Steping();
+                    _moveBadBoy[i].Stepping(i);
                     CheckCollision();
                 }
             }
             StartGame();
             SomeMethod();
         }
-       public bool IsNextLevel()
-        {
-            if (_board.QualityBonus > 0)
-                return false;
-            else return true;
-        }
+
 
         private void ViewBoard()
         {
@@ -127,7 +127,6 @@ namespace PacMan.UI.Concrete.Logic
                     {
                         _moveBadBoy[i].SetCoordinates(0, 0);
                         _board.AddComponents(_moveBadBoy[i].GetCurrentX(), _moveBadBoy[i].GetCurrentY(), BoardElements.BadBoy);
-                        //_board.AddComponents(0, 0, BoardElements.BadBoy);
                     }
                     _moveMan.SetCoordinates();
                     _board.AddComponents(_moveMan.GetCurrentX(), _moveMan.GetCurrentY(), BoardElements.Man);

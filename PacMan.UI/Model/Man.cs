@@ -13,7 +13,7 @@ namespace PacMan.UI.Model
 {
     public class Man : IMoveBody
     {
-        public int Life { get; set; } = 100;
+        public int Life { get; set; } = 5;
 
         public int Score { get; set; }
 
