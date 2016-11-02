@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PacMan.Logic.Model
-{
+namespace PacMan.UI.Model {     
     public class Bonus
+
     {
         private int _value = 1;
         

@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace PacMan.UI.ViewModel
 {
-    class LevelVM
+    public class LevelVM
     {
         private ICommand _displayLevel;
         private int _level=1;
@@ -19,9 +19,9 @@ namespace PacMan.UI.ViewModel
         {
             _level = level;
         }
+
         public LevelVM()
         {
-            
         }
 
         public string DisplayLevel

@@ -32,6 +32,6 @@
         <Grid  x:Name="CanvasHost" Margin="25,25,25,25" Height="450" Width="450" Focusable="False">
         </Grid>
         <TextBlock Foreground="White" FontSize="14" Margin="26,470,390,0" Text="{Binding Path=Level, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-
+        <TextBlock Foreground="White" FontSize="14" Margin="393,470,26,0" Text="{Binding Path=Life, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" RenderTransformOrigin="0.463,-0.696" />
     </Grid>
 </Window>

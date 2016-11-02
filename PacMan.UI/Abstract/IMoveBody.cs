@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace PacMan.Logic.Abstract
+namespace PacMan.UI.Abstract
 {
     public interface IMoveBody
     {

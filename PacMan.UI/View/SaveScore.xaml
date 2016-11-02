@@ -21,12 +21,13 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <Label x:Name="lbl_score" Content="Score" FontSize="20" Margin="120,54,120,204" />
-        <Label x:Name="lbl_currentScore" Content="{Binding CurrentScore}" HorizontalAlignment="Center" FontSize="30" Margin="10,99,10,135" />
+        <Label x:Name="lbl_GameOver" Content="Game Over" FontSize="26" Margin="73,39,73,212" />
+        <Label x:Name="lbl_score" Content="Score" FontSize="20" Margin="120,86,120,177" />
+        <Label x:Name="lbl_currentScore" Content="{Binding CurrentScore}" HorizontalAlignment="Center" FontSize="26" Margin="144,126,144,116" />
         <Label x:Name="lbl_EnterName" Content="Please enter your name:" FontSize="14" Margin="10,182,120,79" />
         <TextBox x:Name="textBox" Height="19" Margin="183,189,5,0" TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Top"/>
         <Button x:Name="btn_Add" Content="Add" HorizontalAlignment="Left" Margin="133,268,0,0" VerticalAlignment="Top" Width="75" Command="{Binding Add}"/>
-        <Button x:Name="btn_Cansel" Content="Cansel" HorizontalAlignment="Left" Margin="213,268,0,0" VerticalAlignment="Top" Width="75" Command="{Binding Cansel}"/>
+        <Button x:Name="btn_Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="213,268,0,0" VerticalAlignment="Top" Width="75" Command="{Binding Cansel}"/>
 
     </Grid>
 </Window>

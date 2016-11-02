@@ -1,5 +1,4 @@
-﻿using PacMan.Logic.Abstract;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,12 +7,13 @@ using System.Windows;
 using System.Net.Mime;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using PacMan.UI.Abstract;
 
-namespace PacMan.Logic.Model
+namespace PacMan.UI.Model
 {
     public class Man : IMoveBody
     {
-        public int Life { get; set; } = 3;
+        public int Life { get; set; } = 100;
 
         public int Score { get; set; }
 

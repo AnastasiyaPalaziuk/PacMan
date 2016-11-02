@@ -1,5 +1,4 @@
-﻿using PacMan.Logic.Model;
-using PacMan.UI.Concrete;
+﻿using PacMan.UI.Concrete;
 using PacMan.UI.View;
 using System;
 using System.Collections.Generic;
@@ -64,13 +63,14 @@ namespace PacMan.UI.ViewModel
         private void StartGameAction()
         {
             var currentWin = Application.Current.Windows[0];
-            currentWin.Hide();
+            
 
             PlayGame start = new PlayGame();
 
+            currentWin.Close();
 
             start.Show();
-            currentWin.Close();
+           
         }
 
         public ICommand Score
@@ -84,14 +84,12 @@ namespace PacMan.UI.ViewModel
         private void ShowAction()
         {
             var currentWin = Application.Current.Windows[0];
-            currentWin.Hide();
+           
 
             ScoreView scoreView = new ScoreView();
-
-
-            scoreView.Show();
             currentWin.Close();
-
+            scoreView.Show();
+            
         }
     }
 }

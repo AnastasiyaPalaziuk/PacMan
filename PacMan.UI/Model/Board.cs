@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PacMan.UI.Concrete.Logic;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace PacMan.Logic.Model
+namespace PacMan.UI.Model
 {
     public class Board
     {
@@ -50,6 +51,14 @@ namespace PacMan.Logic.Model
             GenerateMap();
 
         }
+        public void AddComponents(int x,int y, BoardElements type)
+        {
+            if (_boardElement[x, y] == BoardElements.Bonus && type == BoardElements.Man) 
+                _qualityBonus--;
+                _boardElement[x, y] = type;
+            
+         
+        }
 
         private void GenerateMap()
         {
@@ -62,11 +71,11 @@ namespace PacMan.Logic.Model
                     if (i == 0 || j == 0 || i == _size - 1 || j == _size - 1)
                     {
                         _boardElement[i, j] = BoardElements.Bonus;
-                        _qualityBonus++;
+                       _qualityBonus++;
                     }
                     else
                     {
-                        if (_boardElement[i - 1, j + 1] == BoardElements.Bonus /*&& _boardElement[i - 1, j - 1] == 0*/)
+                        if (_boardElement[i - 1, j + 1] == BoardElements.Bonus)
                         {
                             if ((random.Next()) % 2 == 0)
                             {

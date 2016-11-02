@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -42,17 +43,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abstract\IMoveBody.cs" />
-    <Compile Include="Model\Board.cs" />
-    <Compile Include="Model\BoardElements.cs" />
-    <Compile Include="Model\Bonus.cs" />
-    <Compile Include="Model\BadBoy.cs" />
-    <Compile Include="Model\Side.cs" />
-    <Compile Include="Model\Man.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Concrete\" />
     <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

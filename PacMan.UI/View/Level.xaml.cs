@@ -20,16 +20,20 @@ namespace PacMan.UI.View
     /// </summary>
     public partial class Level : Window
     {
+
         public Level()
         {
             InitializeComponent();
             DataContext = new LevelVM();
         }
+
+     
+
         public Level(int level)
         {
             InitializeComponent();
             DataContext = new LevelVM(level);
         }
-
+        
     }
 }
