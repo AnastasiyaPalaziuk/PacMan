@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PacMan.UI.Abstract
+namespace PacMan.Logic.Model
 {
-   public interface IBadBoyMoveAlgorithm
+    public enum Side
     {
-        void Stepping(int i);
-        void Stepping();
+        Left,
+        Right,
+        Down,
+        Up
     }
+
 }

@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace PacMan.UI.Abstract
+namespace PacMan.Logic.Abstract
 {
     public interface IMoveBody
     {
-        void StepLeft();
-        void StepRight();
-        void StepUp();
-        void StepDown();
+        bool StepLeft();
+        bool StepRight();
+        bool StepUp();
+        bool StepDown();
 
     }
 }

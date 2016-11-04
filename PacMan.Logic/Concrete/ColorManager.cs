@@ -1,4 +1,4 @@
-﻿using PacMan.UI.Model;
+﻿using PacMan.Logic.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
 
-namespace PacMan.UI.Concrete.Logic
+namespace PacMan.Logic.Concrete
 {
     public static class ColorManager
     {

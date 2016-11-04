@@ -1,5 +1,6 @@
-﻿using PacMan.UI.Model;
-using PacMan.UI.View;
+﻿using PacMan.Logic.Concrete;
+using PacMan.Logic.Model;
+using PacMan.UI.Concrete.Logic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,19 +10,18 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace PacMan.UI.Concrete.Logic
+namespace PacMan.Logic.Logic
 {
     public class GameLogic
     {
         private MoveMan _moveMan;
         private MoveBadBoy[] _moveBadBoy;
         private static int _badBoyQuality =3;
-        private int _level = 0;
+        private int _level = 1;
         private Grid _CanvasHost;
         private bool gridIsUsed = false;
         private Board _board;
         private int _boardSize = 15;
-        private Level level;
         private Thread thread;
         public GameLogic(Grid CanvasHost)
         {
@@ -51,6 +51,10 @@ namespace PacMan.UI.Concrete.Logic
             {
                 return _level;
             }
+            set
+            {
+                _level = value;
+            }
             
         }
         private void InicializeComponents()
@@ -58,10 +62,10 @@ namespace PacMan.UI.Concrete.Logic
 
             _moveBadBoy = new MoveBadBoy[_badBoyQuality];
             _board = new Board(_boardSize);
-            _moveMan = new MoveMan(_board, _boardSize, _CanvasHost);
+            _moveMan = new MoveMan(_board, _CanvasHost);
             for (int i = 0; i < _badBoyQuality; i++)
             {
-                _moveBadBoy[i] = new MoveBadBoy(_board, _boardSize,_moveMan.Man, _CanvasHost);
+                _moveBadBoy[i] = new MoveBadBoy(_board,_moveMan.Man, _CanvasHost);
 
 
             }
@@ -84,8 +88,8 @@ namespace PacMan.UI.Concrete.Logic
         }
         public void StartGame()
         {
-            _level++;
-            DisplayLevel();
+            
+            //DisplayLevel();
             ViewBoard();
             
         }
@@ -95,11 +99,18 @@ namespace PacMan.UI.Concrete.Logic
                 return true;
             else return false;
         }
+        public bool ChangeLevel()
+        {
+            if (_board.QualityBonus > 0)
+                return false;
+            else return true;
+        }
         private void SomeMethod()
         {
+            
             while (_board.QualityBonus > 0)
             {
-                Thread.Sleep(300);
+                Thread.Sleep(800);
                 for (int i = 0; i < _badBoyQuality; i++)
                 {
                     _moveBadBoy[i].Stepping(i);
@@ -203,27 +214,6 @@ namespace PacMan.UI.Concrete.Logic
         public void KillThread()
         {
             thread.Abort();
-        }
-        private void DisplayLevel()
-        {
-            if (level == null)
-            {
-
-                level = new Level(_level);
-                level.Show();
-                Thread.Sleep(1500);
-                level.Close();
-            }
-            else
-            {
-                level.Dispatcher.Invoke(new Action(() =>
-                {
-                    level = new Level(_level);
-                    level.Show();
-                    Thread.Sleep(1500);
-                    level.Close();
-                }));
-            }
         }
     }
 }

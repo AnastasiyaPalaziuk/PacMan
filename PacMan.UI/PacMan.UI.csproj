@@ -66,13 +66,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Abstract\IBadBoyMoveAlgorithm.cs" />
-    <Compile Include="Abstract\IMoveBody.cs" />
     <Compile Include="Concrete\CommandHandler.cs" />
-    <Compile Include="Concrete\Logic\ColorManager.cs" />
-    <Compile Include="Concrete\Logic\GameLogic.cs" />
-    <Compile Include="Concrete\Logic\MoveBadBoy.cs" />
-    <Compile Include="Concrete\Logic\MoveMan.cs" />
     <Compile Include="Model\BadBoy.cs" />
     <Compile Include="Model\Board.cs" />
     <Compile Include="Model\BoardElements.cs" />
@@ -153,7 +147,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Abstract\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PacMan.Domain\PacMan.Domain.csproj">
       <Project>{df3ccab8-945e-45fa-9d5d-daa2812d74e0}</Project>

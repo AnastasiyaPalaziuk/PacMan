@@ -1,6 +1,7 @@
-﻿using PacMan.UI.Concrete;
-using PacMan.UI.Concrete.Logic;
-using PacMan.UI.Model;
+﻿using PacMan.Logic.Concrete;
+using PacMan.Logic.Logic;
+using PacMan.Logic.Model;
+using PacMan.UI.Concrete;
 using PacMan.UI.View;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,7 @@ namespace PacMan.UI.ViewModel
         private bool _canExecute;
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
         private GameLogic _game;
+        private Level level;
 
         private Thread thread;
         private SaveScore saveScore = new SaveScore(0);
@@ -102,22 +104,54 @@ namespace PacMan.UI.ViewModel
             _canExecute = true;
             GamesLoop();
         }
+        private bool IsUsed = false;
         private void GamesLoop()
         {
-            
 
+           
             _game.StartGame();
+            DisplayLevel();
             thread = new Thread(() =>
             {
+                
                 while (_game.IsPlay())
                 {
                     RaisePropertyChanged("Score");
                     RaisePropertyChanged("Life");
+                    if (_game.ChangeLevel() && !IsUsed)
+                    {
+                        _game.Level++;
+                        DisplayLevel();
+                        RaisePropertyChanged("Level");
+                        IsUsed = true;
+                    }
+                    if (!_game.ChangeLevel()) IsUsed = false;
                 }
                 ExitAction();
             });
             thread.Start();
            
+        }
+        private void DisplayLevel()
+        {
+            if (level == null)
+            {
+
+                level = new Level(_game.Level);
+                level.Show();
+                Thread.Sleep(1500);
+                level.Close();
+            }
+            else
+            {
+                level.Dispatcher.Invoke(new Action(() =>
+                {
+                    level = new Level(_game.Level);
+                    level.Show();
+                    Thread.Sleep(1500);
+                    level.Close();
+                }));
+            }
         }
 
         #region Commands for move Man
