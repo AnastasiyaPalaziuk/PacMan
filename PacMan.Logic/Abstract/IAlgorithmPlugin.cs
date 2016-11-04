@@ -1,16 +1,15 @@
-﻿using PacMan.Logic.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PacMan.Plugin
+namespace PacMan.Logic.Abstract
 {
     public interface IPlugin
     {
         string PluginName { get; } 
-        void Algorithm(BadBoy badBoy,Man man);
+        void Run(IMoveObject badBoy,IMoveObject man);
         IPluginHost Host { get; set; } 
     }
 }

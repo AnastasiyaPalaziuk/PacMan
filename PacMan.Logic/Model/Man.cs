@@ -12,7 +12,7 @@ using System.Threading;
 
 namespace PacMan.Logic.Model
 {
-    public class Man : IMoveBody
+    public class Man : IMoveObject
     {
         public int Life { get; set; } = 5;
         private Board _board;

@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0248FA66-E958-44F1-B76D-C16980DF071B}</ProjectGuid>
+    <ProjectGuid>{564883A0-83E9-47C3-966C-5F1FE8B0A7A9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PacMan.Plugin</RootNamespace>
-    <AssemblyName>PacMan.Plugin</AssemblyName>
+    <RootNamespace>FirstAlgorithm</RootNamespace>
+    <AssemblyName>FirstAlgorithm</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,13 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abstract\IAlgorithmPlugin.cs" />
-    <Compile Include="Abstract\IPluginHost.cs" />
+    <Compile Include="Algorithm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PacMan.Logic\PacMan.Logic.csproj">
-      <Project>{FF36EC27-9176-4507-AB0B-51EE4D533FE4}</Project>
+      <Project>{ff36ec27-9176-4507-ab0b-51ee4d533fe4}</Project>
       <Name>PacMan.Logic</Name>
     </ProjectReference>
   </ItemGroup>

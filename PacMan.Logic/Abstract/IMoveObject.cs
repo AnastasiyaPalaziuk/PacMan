@@ -8,8 +8,10 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace PacMan.Logic.Abstract
 {
-    public interface IMoveBody
+    public interface IMoveObject
     {
+        int CurrentCoordinateY { get; set; }
+        int CurrentCoordinateX { get; set; }
         bool StepLeft();
         bool StepRight();
         bool StepUp();

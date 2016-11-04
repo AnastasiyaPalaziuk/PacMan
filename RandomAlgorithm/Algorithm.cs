@@ -1,5 +1,4 @@
-﻿using PacMan.Logic.Model;
-using PacMan.Plugin;
+﻿using PacMan.Logic.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,12 +7,19 @@ using System.Threading.Tasks;
 
 namespace RandomAlgorithm
 {
-    public class RandomAlgorithm : IPlugin
+   public class Algorithm : IPlugin
     {
         private string _PluginName = "RandomAlgorithm";
-
-        public IPluginHost Host { get; set;}
-
+        IPluginHost _Host;
+        public IPluginHost Host
+        {
+            get { return _Host; }
+            set
+            {
+                _Host = value;
+                _Host.Register(this);
+            }
+        }
         public string PluginName
         {
             get
@@ -22,9 +28,9 @@ namespace RandomAlgorithm
             }
         }
 
-        public void Algorithm(BadBoy badBoy, Man man)
+        public void Run(IMoveObject badBoy, IMoveObject man)
         {
-            switch ((new Random()).Next(4) )
+            switch ((new Random()).Next(4))
             {
                 case 0:
                     badBoy.StepDown();
@@ -40,7 +46,7 @@ namespace RandomAlgorithm
                     break;
 
             }
+
         }
     }
 }
-

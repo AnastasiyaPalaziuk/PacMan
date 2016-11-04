@@ -1,4 +1,4 @@
-﻿namespace PacMan.Plugin
+﻿namespace PacMan.Logic.Abstract
 {
     public interface IPluginHost
     {

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("PacMan.Plugin")]
+[assembly: AssemblyTitle("SecondAlgorithm")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("PacMan.Plugin")]
+[assembly: AssemblyProduct("SecondAlgorithm")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("0248fa66-e958-44f1-b76d-c16980df071b")]
+[assembly: Guid("5f2f370f-b89d-48b7-95d0-fd5aae6c2d55")]
 
 // Version information for an assembly consists of the following four values:
 //

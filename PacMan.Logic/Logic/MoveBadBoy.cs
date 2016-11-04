@@ -11,17 +11,18 @@ using PacMan.Logic.Abstract;
 
 namespace PacMan.Logic.Logic
 {
-    public class MoveBadBoy : IBadBoyMoveAlgorithm
-    {
+    public class MoveBadBoy {
+
         private Random random = new Random();
         private BadBoy _badBoy;
         private Board _board;
         private Man _man;
+        private LoaderPlugins _plugins;
         public MoveBadBoy(Board board, Man man, Grid canvasHost)
         {
             _board = board;
             _man = man;
-
+            _plugins = new LoaderPlugins();
             _badBoy = new BadBoy(board);
 
         }
@@ -37,115 +38,26 @@ namespace PacMan.Logic.Logic
             ColorManager.ChangeElementColor(_badBoy.CurrentCoordinateY, _badBoy.CurrentCoordinateX, _badBoy.LastStep);
         }
 
-        public void Stepping()
-        {
-            OldCell();
-            RandomsMoveAction();
-            NewCell();
-        }
         public void Stepping(int i)
         {
              OldCell();
             switch (i)
             {
-                case 0: FirstAlgorithm(); break;
-                case 1: SecondAlgorithm(); break;
-                default: Stepping(); break;
+                case 0:
+                    _plugins.Plugins.FirstOrDefault(item => item.PluginName == "FirstAlgorithm").Run(_badBoy,_man);
+                     break;
+                case 1:
+                    _plugins.Plugins.FirstOrDefault(item => item.PluginName == "SecondAlgorithm").Run(_badBoy, _man);
+                    break;
+                default:
+                    _plugins.Plugins.FirstOrDefault(item => item.PluginName == "RandomAlgorithm").Run(_badBoy, _man);
+                     break;
             }
 
             NewCell();
         }
 
 
-        private void SecondAlgorithm()
-        {
-            if (_badBoy.CurrentCoordinateY != _man.CurrentCoordinateY)
-            {
-                if (_badBoy.CurrentCoordinateY > _man.CurrentCoordinateY)
-                {
-                    if (!_badBoy.StepUp())
-                    {
-                        _badBoy.StepLeft();
-                    }
-                }
-                else
-                {
-                    if (!_badBoy.StepDown())
-                        _badBoy.StepRight();
-                }
-            }
-            else if (_badBoy.CurrentCoordinateX != _man.CurrentCoordinateX)
-            {
-                if (_badBoy.CurrentCoordinateX > _man.CurrentCoordinateX)
-                {
-                    if (!_badBoy.StepLeft())
-                    {
-                        _badBoy.StepDown();
-                    }
-                }
-                else
-                {
-                    if (!_badBoy.StepRight())
-                        _badBoy.StepUp();
-                }
-            }
-
-        }
-
-        private void FirstAlgorithm()
-        {
-            if (_badBoy.CurrentCoordinateX != _man.CurrentCoordinateX)
-            {
-                if (_badBoy.CurrentCoordinateX > _man.CurrentCoordinateX)
-                {
-                    if (!_badBoy.StepLeft())
-                    {
-                        _badBoy.StepDown();
-                    }
-                }
-                else
-                {
-                    if (!_badBoy.StepRight())
-                        _badBoy.StepUp();
-                }
-            }
-            else if (_badBoy.CurrentCoordinateY != _man.CurrentCoordinateY)
-            {
-                if (_badBoy.CurrentCoordinateY > _man.CurrentCoordinateY)
-                {
-                    if (!_badBoy.StepUp())
-                    {
-                        _badBoy.StepLeft();
-                    }
-                }
-                else
-                {
-                    if (!_badBoy.StepDown())
-                        _badBoy.StepRight();
-                }
-            }
-
-        }
-
-        private void RandomsMoveAction()
-        {
-            //switch (random.Next() % 4)
-            //{
-            //    case 0:
-            //       _badBoy.StepDown();
-            //        break;
-            //    case 1:
-            //        _badBoy.StepLeft();
-            //        break;
-            //    case 2:
-            //        _badBoy.StepRight();
-            //        break;
-            //    case 3:
-            //        _badBoy.StepUp();
-            //        break;
-
-            //}
-        }
 
         public void SetCoordinates(int x, int y)
         {

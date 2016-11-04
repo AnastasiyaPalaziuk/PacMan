@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PacMan.Logic.Model
 {
-    public class BadBoy : IMoveBody
+    public class BadBoy : IMoveObject
     {
         public int CurrentCoordinateY { get; set; }
         public int CurrentCoordinateX { get; set; }
