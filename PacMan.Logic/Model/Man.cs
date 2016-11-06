@@ -9,6 +9,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using PacMan.Logic.Abstract;
 using System.Threading;
+using NLog;
 
 namespace PacMan.Logic.Model
 {
@@ -16,6 +17,7 @@ namespace PacMan.Logic.Model
     {
         public int Life { get; set; } = 5;
         private Board _board;
+        private Logger log = LogManager.GetCurrentClassLogger();
 
         public int Score { get; set; }
 
@@ -48,7 +50,7 @@ namespace PacMan.Logic.Model
         }
         public void AddBonusValue()
         {
-            Score ++;
+            Score++;
             _board.QualityBonus--;
         }
 
@@ -57,6 +59,8 @@ namespace PacMan.Logic.Model
             if (CurrentCoordinateX != 0 && CheckCell(_board.BoardElement[CurrentCoordinateX - 1, CurrentCoordinateY]))
             {
                 CurrentCoordinateX--;
+                log.Trace("Шаг влево главного героя");
+
                 return true;
             }
             return false;
@@ -66,7 +70,10 @@ namespace PacMan.Logic.Model
         {
             if (CurrentCoordinateX != _board.Size - 1 && CheckCell(_board.BoardElement[CurrentCoordinateX + 1, CurrentCoordinateY]))
             {
+
                 CurrentCoordinateX++;
+                log.Trace("Шаг вправо главного героя");
+
                 return true;
             }
             return false;
@@ -77,6 +84,7 @@ namespace PacMan.Logic.Model
             if (CurrentCoordinateY != _board.Size - 1 && CheckCell(_board.BoardElement[CurrentCoordinateX, CurrentCoordinateY + 1]))
             {
                 CurrentCoordinateY++;
+                log.Trace("Шаг вниз главного героя");
                 return true;
             }
             return false;
@@ -87,6 +95,7 @@ namespace PacMan.Logic.Model
             if (CurrentCoordinateY != 0 && CheckCell(_board.BoardElement[CurrentCoordinateX, CurrentCoordinateY - 1]))
             {
                 CurrentCoordinateY--;
+                log.Trace("Шаг вверх главного героя");
                 return true;
             }
             return false;

@@ -10,7 +10,7 @@ namespace PacMan.Domain.Abstract
     public interface IPlayerRepository
     {
         IEnumerable<Player> Players { get; }
-        Player DeleteProduct(int playerID);
+        Player DeletePlayer(int playerID);
 
         void AddPlayer(Player player);
     }

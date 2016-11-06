@@ -8,6 +8,7 @@ using System.Threading;
 using PacMan.Logic.Concrete;
 using PacMan.Logic.Model;
 using PacMan.Logic.Abstract;
+using NLog;
 
 namespace PacMan.Logic.Logic
 {
@@ -17,12 +18,12 @@ namespace PacMan.Logic.Logic
         private BadBoy _badBoy;
         private Board _board;
         private Man _man;
-        private LoaderPlugins _plugins;
+        private Logger log = LogManager.GetCurrentClassLogger(); 
+        private static LoaderPlugins _plugins= new LoaderPlugins();
         public MoveBadBoy(Board board, Man man, Grid canvasHost)
         {
             _board = board;
             _man = man;
-            _plugins = new LoaderPlugins();
             _badBoy = new BadBoy(board);
 
         }

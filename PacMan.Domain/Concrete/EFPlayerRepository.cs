@@ -5,11 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PacMan.Domain.Entities;
+using NLog;
 
 namespace PacMan.Domain.Concrete
 {
+   
+
     public class EFPlayerRepository : IPlayerRepository
     {
+        private Logger log = LogManager.GetCurrentClassLogger(); 
         private EFDbContext context = new EFDbContext();
         public IEnumerable<Player> Players
         {
@@ -19,7 +23,7 @@ namespace PacMan.Domain.Concrete
             }
         }
 
-        public Player DeleteProduct(int playerID)
+        public Player DeletePlayer(int playerID)
         {
             Player dbEntry = context.Players
                            .FirstOrDefault(p => p.Id== playerID);
@@ -34,6 +38,7 @@ namespace PacMan.Domain.Concrete
 
         public void AddPlayer(Player player)
         {
+            log.Trace("Добавление результатов игрока {0} в базу данных", player.Name);
             context.Players.Add(player);
             context.SaveChanges();
         }

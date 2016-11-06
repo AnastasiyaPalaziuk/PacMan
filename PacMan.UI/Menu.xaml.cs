@@ -1,4 +1,5 @@
-﻿using PacMan.UI.ViewModel;
+﻿using PacMan.UI.Concrete;
+using PacMan.UI.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,10 +24,14 @@ namespace PacMan.UI
     {
         public Menu()
         {
+            App.log.Trace("Запуск главного меню");    
             InitializeComponent();
             DataContext = new MenuVM();
+            App.log.Trace("Меню запущенно");
+
+
         }
 
-       
+
     }
 }

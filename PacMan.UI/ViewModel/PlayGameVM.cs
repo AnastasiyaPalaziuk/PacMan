@@ -40,26 +40,6 @@ namespace PacMan.UI.ViewModel
         private Thread thread;
         private SaveScore saveScore = new SaveScore(0);
         #region Window`s Action
-        public ICommand Scale
-        {
-            get
-            {
-                return _scale ?? (_scale = new CommandHandler(() => ScaleChange(), _canExecute));
-            }
-        }
-
-        private void ScaleChange()
-        {
-            var currentWin = System.Windows.Application.Current.Windows[0];
-            if (currentWin.WindowState.Equals(WindowState.Normal))
-            {
-                currentWin.WindowState = WindowState.Maximized;
-            }
-            else
-            {
-                currentWin.WindowState = WindowState.Normal;
-            }
-        }
         public ICommand DragMove
         {
             get
@@ -70,6 +50,8 @@ namespace PacMan.UI.ViewModel
 
         private void DragMoveAction()
         {
+            App.log.Trace("Перемещение окна PlayGame по экрану");
+
             var currentWin = System.Windows.Application.Current.Windows[0];
             currentWin.DragMove();
         }
@@ -83,12 +65,13 @@ namespace PacMan.UI.ViewModel
         }
         private void ExitAction()
         {
-
+            App.log.Trace("Игра окончена");
             saveScore.Dispatcher.Invoke(() =>
             {
                 saveScore = new SaveScore(_game.Score);
                 _game.KillThread();
                 thread.Abort();
+                App.log.Debug("Убит поток {0}", thread.Name);
                 var currentWin = System.Windows.Application.Current.Windows;
                 saveScore.Show();
                 currentWin[0].Close();
@@ -107,8 +90,7 @@ namespace PacMan.UI.ViewModel
         private bool IsUsed = false;
         private void GamesLoop()
         {
-
-           
+            App.log.Trace("Запуск жизненного цикла игры");
             _game.StartGame();
             DisplayLevel();
             thread = new Thread(() =>
@@ -129,11 +111,16 @@ namespace PacMan.UI.ViewModel
                 }
                 ExitAction();
             });
+            thread.Name = "Game`s Loop";
+            App.log.Debug("Старт потока {0}",thread.Name);
+
             thread.Start();
            
         }
         private void DisplayLevel()
         {
+            App.log.Trace("Отображение текущего уровня игры");
+
             if (level == null)
             {
 
@@ -152,6 +139,7 @@ namespace PacMan.UI.ViewModel
                     level.Close();
                 }));
             }
+            App.log.Trace("Окно текущего уровня закрыто");
         }
 
         #region Commands for move Man

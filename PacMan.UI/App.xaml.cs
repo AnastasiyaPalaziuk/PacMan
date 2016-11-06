@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +14,12 @@ namespace PacMan.UI
     /// </summary>
     public partial class App : Application
     {
+        public static Logger log = LogManager.GetCurrentClassLogger();
+
+        static App()
+        {
+           App.log.Debug("Запуск приложения");
+        }
+
     }
 }

@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Threading;
 using PacMan.Logic.Model;
 using PacMan.Logic.Concrete;
+using NLog;
 
 namespace PacMan.UI.Concrete.Logic
 {
@@ -77,12 +78,6 @@ namespace PacMan.UI.Concrete.Logic
             _board.BoardElement[_man.CurrentCoordinateX, _man.CurrentCoordinateY] = BoardElements.Way;
             ColorManager.ChangeElementColor(_man.CurrentCoordinateY, _man.CurrentCoordinateX, BoardElements.Way);
         }
-
-        private void OneStep(Side sideKey)
-        {
-           
-        }
-
       
         public int CurrentScore
         {

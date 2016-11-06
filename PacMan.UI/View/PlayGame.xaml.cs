@@ -21,9 +21,14 @@ namespace PacMan.UI.View
     public partial class PlayGame : Window
     {
         public PlayGame()
+
         {
+            App.log.Trace("Запуск игры");
+
             InitializeComponent();
             DataContext = new PlayGameVM(CanvasHost);
+            App.log.Trace("Игра запущенна");
+
         }
     }
 }

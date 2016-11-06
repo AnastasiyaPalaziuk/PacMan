@@ -1,4 +1,5 @@
-﻿using PacMan.Logic.Abstract;
+﻿using NLog;
+using PacMan.Logic.Abstract;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,7 +13,7 @@ namespace PacMan.Logic.Concrete
     public class LoaderPlugins : IPluginHost
     {
         private List<IPlugin> _plugins;
-        
+        private Logger log = LogManager.GetCurrentClassLogger(); 
         public List<IPlugin> Plugins
         {
             get { return _plugins; }
@@ -46,6 +47,7 @@ namespace PacMan.Logic.Concrete
                 {
                     if (objType != null)
                     {
+                        log.Info("Загрузка плагина {0}", ((IPlugin)Activator.CreateInstance(objType)).PluginName);
                         this._plugins.Add((IPlugin)Activator.CreateInstance(objType));
                         this._plugins[this._plugins.Count - 1].Host = this;
                     }
@@ -59,6 +61,7 @@ namespace PacMan.Logic.Concrete
 
         public bool Register(IPlugin plug)
         {
-            return true;        }
+            return true;
+        }
     }
 }

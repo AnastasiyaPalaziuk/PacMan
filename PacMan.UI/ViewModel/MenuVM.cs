@@ -35,7 +35,8 @@ namespace PacMan.UI.ViewModel
         }
         private void ExitAction()
         {
-            Environment.Exit(0);
+            App.log.Trace("Выход из программы");
+           Environment.Exit(0);
         }
         public ICommand DragMove
         {
@@ -47,7 +48,8 @@ namespace PacMan.UI.ViewModel
 
         private void DragMoveAction()
         {
-            var currentWin = Application.Current.Windows[0];
+            App.log.Trace("Перемещение окна по экрану");
+           var currentWin = Application.Current.Windows[0];
             currentWin.DragMove();
 
         }
@@ -62,13 +64,14 @@ namespace PacMan.UI.ViewModel
 
         private void StartGameAction()
         {
+
             var currentWin = Application.Current.Windows[0];
             
 
             PlayGame start = new PlayGame();
-
+            App.log.Trace("Главное меню закрывается");
             currentWin.Close();
-
+            App.log.Trace("Отображение окна игры");
             start.Show();
            
         }
@@ -84,9 +87,11 @@ namespace PacMan.UI.ViewModel
         private void ShowAction()
         {
             var currentWin = Application.Current.Windows[0];
-           
+            App.log.Trace("Главное меню закрывается");
 
             ScoreView scoreView = new ScoreView();
+            App.log.Trace("Отображение окна Score");
+
             currentWin.Close();
             scoreView.Show();
             

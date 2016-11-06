@@ -27,7 +27,7 @@
         <Label x:Name="lbl_EnterName" Content="Please enter your name:" FontSize="14" Margin="10,182,120,79" />
         <TextBox x:Name="textBox" MaxLength="8" Height="19" Margin="183,189,5,0" TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Top"/>
         <Button x:Name="btn_Add" Content="Add" HorizontalAlignment="Left" Margin="133,268,0,0" VerticalAlignment="Top" Width="75" Command="{Binding Add}"/>
-        <Button x:Name="btn_Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="213,268,0,0" VerticalAlignment="Top" Width="75" Command="{Binding Cansel}"/>
+        <Button x:Name="btn_Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="213,268,0,0" VerticalAlignment="Top" Width="75" Command="{Binding Cancel}"/>
 
     </Grid>
 </Window>

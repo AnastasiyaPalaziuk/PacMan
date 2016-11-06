@@ -55,7 +55,7 @@ namespace PacMan.UI.ViewModel
             }
             
         }
-        public ICommand Cansel
+        public ICommand Cancel
         {
             get
             {
@@ -72,9 +72,10 @@ namespace PacMan.UI.ViewModel
 
         private void DragMoveAction()
         {
+
             var currentWin = Application.Current.Windows[0];
             currentWin.DragMove();
-
+            App.log.Trace("Перемещение окна Save Score по экрану");
 
         }
 

@@ -1,4 +1,5 @@
-﻿using PacMan.Logic.Concrete;
+﻿using NLog;
+using PacMan.Logic.Concrete;
 using PacMan.Logic.Model;
 using PacMan.UI.Concrete.Logic;
 using System;
@@ -14,9 +15,11 @@ namespace PacMan.Logic.Logic
 {
     public class GameLogic
     {
+
+        private Logger log = LogManager.GetCurrentClassLogger();
         private MoveMan _moveMan;
         private MoveBadBoy[] _moveBadBoy;
-        private static int _badBoyQuality =3;
+        private static int _badBoyQuality = 3;
         private int _level = 1;
         private Grid _CanvasHost;
         private bool gridIsUsed = false;
@@ -65,33 +68,35 @@ namespace PacMan.Logic.Logic
             _moveMan = new MoveMan(_board, _CanvasHost);
             for (int i = 0; i < _badBoyQuality; i++)
             {
-                _moveBadBoy[i] = new MoveBadBoy(_board,_moveMan.Man, _CanvasHost);
-
-
+                _moveBadBoy[i] = new MoveBadBoy(_board, _moveMan.Man, _CanvasHost);
             }
-            _moveBadBoy[0].SetCoordinates(0, 0);
-            _moveBadBoy[1].SetCoordinates(_boardSize - 1, _boardSize - 1);
-            _moveBadBoy[2].SetCoordinates(0, _boardSize - 1);
 
-            for (int i = 0; i < _badBoyQuality; i++)
+        
+        _moveBadBoy[0].SetCoordinates(0, 0);
+        _moveBadBoy[1].SetCoordinates(_boardSize - 1, _boardSize - 1);
+        _moveBadBoy[2].SetCoordinates(0, _boardSize - 1);
+
+            for (int i = 0; i<_badBoyQuality; i++)
             {
                 _board.AddComponents(_moveBadBoy[0].GetCurrentX(), _moveBadBoy[0].GetCurrentY(), BoardElements.BadBoy);
 
             }
-        }
+}
         private void RunParallelThread()
         {
             thread = new Thread(SomeMethod);
-            thread.Name = "trololo";
+            thread.Name = "Move Bad Boys";
+            log.Debug("Запуск потока {0}", thread.Name);
             thread.Start();
 
         }
         public void StartGame()
         {
+           
+            setBoardComponents();
+
             
-            //DisplayLevel();
-            ViewBoard();
-            
+
         }
         public bool IsPlay()
         {
@@ -103,14 +108,17 @@ namespace PacMan.Logic.Logic
         {
             if (_board.QualityBonus > 0)
                 return false;
-            else return true;
+            else
+            {
+                log.Trace("Изменения свойства Level");
+                return true; }
         }
         private void SomeMethod()
         {
             
             while (_board.QualityBonus > 0)
             {
-                Thread.Sleep(800);
+                Thread.Sleep(15000);
                 for (int i = 0; i < _badBoyQuality; i++)
                 {
                     _moveBadBoy[i].Stepping(i);
@@ -120,24 +128,24 @@ namespace PacMan.Logic.Logic
             StartGame();
             SomeMethod();
         }
-
-
-        private void ViewBoard()
-        {
-            setBoardComponents();
-        }
+       
         private void setBoardComponents()
         {
+
             _CanvasHost.Dispatcher.Invoke(new Action(() =>
             {
+                log.Trace("Старт добавления элементов на игральное поле");
                 if (gridIsUsed)
                 {
                     clearGrid();
                     _board.UpdateBoard();
+                    _moveBadBoy[0].SetCoordinates(0, 0);
+                    _moveBadBoy[1].SetCoordinates(_boardSize - 1, _boardSize - 1);
+                    _moveBadBoy[2].SetCoordinates(0, _boardSize - 1);
                     for (int i = 0; i < _badBoyQuality; i++)
                     {
-                        _moveBadBoy[i].SetCoordinates(0, 0);
-                        _board.AddComponents(_moveBadBoy[i].GetCurrentX(), _moveBadBoy[i].GetCurrentY(), BoardElements.BadBoy);
+                        _board.AddComponents(_moveBadBoy[0].GetCurrentX(), _moveBadBoy[0].GetCurrentY(), BoardElements.BadBoy);
+
                     }
                     _moveMan.SetCoordinates();
                     _board.AddComponents(_moveMan.GetCurrentX(), _moveMan.GetCurrentY(), BoardElements.Man);
@@ -166,11 +174,14 @@ namespace PacMan.Logic.Logic
                     }
 
                 }
+                log.Trace("Элементы добавлены");
+
             }));
         }
         private void clearGrid()
         {
 
+            log.Trace("Старт очистки игрального поля");
 
             for (int i = 0; i < _boardSize; i++)
             {
@@ -183,6 +194,7 @@ namespace PacMan.Logic.Logic
 
                 }
             }
+            log.Trace("игральное поле очищенно");
 
         }
         private void CheckCollision()
@@ -197,6 +209,8 @@ namespace PacMan.Logic.Logic
                         _moveBadBoy[i].LastStep = BoardElements.Way;
                     }
                     if (_moveBadBoy[i].LastStep == BoardElements.Man) _moveBadBoy[i].LastStep = BoardElements.Way;
+                    log.Trace("Изменение свойства Lifes");
+
                     _moveMan.Lifes--;
                     _moveMan.SetCoordinates();
                     _board.AddComponents(_moveMan.GetCurrentX(), _moveMan.GetCurrentY(), BoardElements.Man);
@@ -213,6 +227,7 @@ namespace PacMan.Logic.Logic
         }
         public void KillThread()
         {
+            log.Debug("Убит поток {0}",thread.Name);
             thread.Abort();
         }
     }
