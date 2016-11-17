@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Net.Mime;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using PacMan.Logic.Abstract;
+﻿using PacMan.Logic.Abstract;
 using System.Threading;
 using NLog;
 
@@ -16,8 +7,8 @@ namespace PacMan.Logic.Model
     public class Man : IMoveObject
     {
         public int Life { get; set; } = 5;
-        private Board _board;
-        private Logger log = LogManager.GetCurrentClassLogger();
+        private readonly Board _board;
+        private readonly Logger _log = LogManager.GetCurrentClassLogger();
 
         public int Score { get; set; }
 
@@ -59,7 +50,7 @@ namespace PacMan.Logic.Model
             if (CurrentCoordinateX != 0 && CheckCell(_board.BoardElement[CurrentCoordinateX - 1, CurrentCoordinateY]))
             {
                 CurrentCoordinateX--;
-                log.Trace("Шаг влево главного героя");
+                _log.Trace("Шаг влево главного героя");
 
                 return true;
             }
@@ -72,7 +63,7 @@ namespace PacMan.Logic.Model
             {
 
                 CurrentCoordinateX++;
-                log.Trace("Шаг вправо главного героя");
+                _log.Trace("Шаг вправо главного героя");
 
                 return true;
             }
@@ -84,7 +75,7 @@ namespace PacMan.Logic.Model
             if (CurrentCoordinateY != _board.Size - 1 && CheckCell(_board.BoardElement[CurrentCoordinateX, CurrentCoordinateY + 1]))
             {
                 CurrentCoordinateY++;
-                log.Trace("Шаг вниз главного героя");
+                _log.Trace("Шаг вниз главного героя");
                 return true;
             }
             return false;
@@ -95,7 +86,7 @@ namespace PacMan.Logic.Model
             if (CurrentCoordinateY != 0 && CheckCell(_board.BoardElement[CurrentCoordinateX, CurrentCoordinateY - 1]))
             {
                 CurrentCoordinateY--;
-                log.Trace("Шаг вверх главного героя");
+                _log.Trace("Шаг вверх главного героя");
                 return true;
             }
             return false;

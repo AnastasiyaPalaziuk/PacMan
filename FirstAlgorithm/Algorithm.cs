@@ -1,32 +1,21 @@
 ﻿using PacMan.Logic.Abstract;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FirstAlgorithm
 {
     public class Algorithm : IPlugin
     {
-        private string _PluginName = "FirstAlgorithm";
-        IPluginHost _Host;
+        private IPluginHost _host;
         public IPluginHost Host
         {
-            get { return _Host; }
+            get { return _host; }
             set
             {
-                _Host = value;
-                _Host.Register(this);
+                _host = value;
+                _host.Register(this);
             }
         }
-        public string PluginName
-        {
-            get
-            {
-                return _PluginName;
-            }
-        }
+
+        public string PluginName { get; } = "FirstAlgorithm";
 
         public void Run(IMoveObject badBoy, IMoveObject man)
         {

@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace PacMan.UI.Concrete
 {
-    class CommandHandler : ICommand
+    public class CommandHandler : ICommand
     {
 
-        private Action _action;
+        private readonly Action _action;
         private bool _canExecute;
         public CommandHandler(Action action, bool canExecute)
         {

@@ -1,33 +1,21 @@
 ﻿using PacMan.Logic.Abstract;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace RandomAlgorithm
 {
    public class Algorithm : IPlugin
     {
-        private string _PluginName = "RandomAlgorithm";
-        IPluginHost _Host;
+        private IPluginHost _host;
         public IPluginHost Host
         {
-            get { return _Host; }
+            get { return _host; }
             set
             {
-                _Host = value;
-                _Host.Register(this);
-            }
-        }
-        public string PluginName
-        {
-            get
-            {
-                return _PluginName;
+                _host = value;
+                _host.Register(this);
             }
         }
 
+        public string PluginName { get; } = "RandomAlgorithm";
         public void Run(IMoveObject badBoy, IMoveObject man)
         {
             switch ((new Random()).Next(4))
@@ -44,9 +32,7 @@ namespace RandomAlgorithm
                 case 3:
                     badBoy.StepUp();
                     break;
-
             }
-
         }
     }
 }

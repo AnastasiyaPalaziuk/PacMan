@@ -3,27 +3,17 @@ using PacMan.Logic.Logic;
 using PacMan.Logic.Model;
 using PacMan.UI.Concrete;
 using PacMan.UI.View;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Forms;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Threading;
 
 namespace PacMan.UI.ViewModel
 {
-    class PlayGameVM : INotifyPropertyChanged
+    public class PlayGameViewModel : INotifyPropertyChanged
     {
         #region ICommand parametrs 
 
-        private ICommand _scale;
         private ICommand _dragMove;
         private ICommand _exit;
         private ICommand _moveManLeft;
@@ -32,13 +22,13 @@ namespace PacMan.UI.ViewModel
         private ICommand _moveManDown;
 
         #endregion
-        private bool _canExecute;
+        private readonly bool _canExecute;
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
-        private GameLogic _game;
-        private Level level;
+        private readonly GameLogic _game;
+        private Level _level;
 
-        private Thread thread;
-        private SaveScore saveScore = new SaveScore(0);
+        private Thread _thread;
+        private SaveScore _saveScore = new SaveScore(0);
         #region Window`s Action
         public ICommand DragMove
         {
@@ -48,12 +38,12 @@ namespace PacMan.UI.ViewModel
             }
         }
 
-        private void DragMoveAction()
+        private static void DragMoveAction()
         {
-            App.log.Trace("Перемещение окна PlayGame по экрану");
+            App.Log.Trace("Перемещение окна PlayGame по экрану");
 
             var currentWin = System.Windows.Application.Current.Windows[0];
-            currentWin.DragMove();
+            currentWin?.DragMove();
         }
 
         public ICommand Exit
@@ -65,81 +55,79 @@ namespace PacMan.UI.ViewModel
         }
         private void ExitAction()
         {
-            App.log.Trace("Игра окончена");
-            saveScore.Dispatcher.Invoke(() =>
+            App.Log.Trace("Игра окончена");
+            _saveScore.Dispatcher.Invoke(() =>
             {
-                saveScore = new SaveScore(_game.Score);
+                _saveScore = new SaveScore(_game.Score);
                 _game.KillThread();
-                thread.Abort();
-                App.log.Debug("Убит поток {0}", thread.Name);
+                _thread.Abort();
+                App.Log.Debug("Убит поток {0}", _thread.Name);
                 var currentWin = System.Windows.Application.Current.Windows;
-                saveScore.Show();
-                currentWin[0].Close();
-                if (currentWin[1] != null) currentWin[1].Close();/*ГРАБЛИ*/
+                _saveScore.Show();
+                currentWin[0]?.Close();
+                currentWin[1]?.Close();/*ГРАБЛИ*/
             });
 
         }
         #endregion
-        public PlayGameVM(Grid CanvasHost)
+        public PlayGameViewModel(Grid canvasHost)
         {
-            _game = new GameLogic(CanvasHost);
-            ColorManager.SetCanvasHost(CanvasHost);
+            _game = new GameLogic(canvasHost);
+            ColorManager.SetCanvasHost(canvasHost);
             _canExecute = true;
             GamesLoop();
         }
-        private bool IsUsed = false;
+        private bool _isUsed;
         private void GamesLoop()
         {
-            App.log.Trace("Запуск жизненного цикла игры");
+            App.Log.Trace("Запуск жизненного цикла игры");
             _game.StartGame();
             DisplayLevel();
-            thread = new Thread(() =>
+            _thread = new Thread(() =>
             {
-                
                 while (_game.IsPlay())
                 {
                     RaisePropertyChanged("Score");
                     RaisePropertyChanged("Life");
-                    if (_game.ChangeLevel() && !IsUsed)
+                    if (_game.ChangeLevel() && !_isUsed)
                     {
                         _game.Level++;
                         DisplayLevel();
                         RaisePropertyChanged("Level");
-                        IsUsed = true;
+                        _isUsed = true;
                     }
-                    if (!_game.ChangeLevel()) IsUsed = false;
+                    if (!_game.ChangeLevel()) _isUsed = false;
                 }
                 ExitAction();
-            });
-            thread.Name = "Game`s Loop";
-            App.log.Debug("Старт потока {0}",thread.Name);
+            }) {Name = "Game`s Loop"};
+            App.Log.Debug("Старт потока {0}",_thread.Name);
 
-            thread.Start();
+            _thread.Start();
            
         }
         private void DisplayLevel()
         {
-            App.log.Trace("Отображение текущего уровня игры");
+            App.Log.Trace("Отображение текущего уровня игры");
 
-            if (level == null)
+            if (_level == null)
             {
 
-                level = new Level(_game.Level);
-                level.Show();
+                _level = new Level(_game.Level);
+                _level.Show();
                 Thread.Sleep(1500);
-                level.Close();
+                _level.Close();
             }
             else
             {
-                level.Dispatcher.Invoke(new Action(() =>
+                _level.Dispatcher.Invoke(() =>
                 {
-                    level = new Level(_game.Level);
-                    level.Show();
+                    _level = new Level(_game.Level);
+                    _level.Show();
                     Thread.Sleep(1500);
-                    level.Close();
-                }));
+                    _level.Close();
+                });
             }
-            App.log.Trace("Окно текущего уровня закрыто");
+            App.Log.Trace("Окно текущего уровня закрыто");
         }
 
         #region Commands for move Man

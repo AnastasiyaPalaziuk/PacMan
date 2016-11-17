@@ -8,10 +8,6 @@ namespace PacMan.Logic.Model {
     public class Bonus
 
     {
-        private int _value = 1;
-        
-        public int Value { get { return _value; } }
-         
-
+        public int Value { get; } = 1;
     }
 }

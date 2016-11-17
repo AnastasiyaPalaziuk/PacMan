@@ -1,26 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Threading;
+﻿using System.Linq;
 using PacMan.Logic.Concrete;
 using PacMan.Logic.Model;
-using PacMan.Logic.Abstract;
-using NLog;
 
 namespace PacMan.Logic.Logic
 {
     public class MoveBadBoy {
 
-        private Random random = new Random();
-        private BadBoy _badBoy;
-        private Board _board;
-        private Man _man;
-        private Logger log = LogManager.GetCurrentClassLogger(); 
-        private static LoaderPlugins _plugins= new LoaderPlugins();
-        public MoveBadBoy(Board board, Man man, Grid canvasHost)
+        private readonly BadBoy _badBoy;
+        private readonly Board _board;
+        private readonly Man _man;
+        //private Logger _log = LogManager.GetCurrentClassLogger(); 
+        private static readonly LoaderPlugins Plugins= new LoaderPlugins();
+        public MoveBadBoy(Board board, Man man)
         {
             _board = board;
             _man = man;
@@ -45,13 +36,13 @@ namespace PacMan.Logic.Logic
             switch (i)
             {
                 case 0:
-                    _plugins.Plugins.FirstOrDefault(item => item.PluginName == "FirstAlgorithm").Run(_badBoy,_man);
+                    Plugins.Plugins.FirstOrDefault(item => item.PluginName == "FirstAlgorithm")?.Run(_badBoy,_man);
                      break;
                 case 1:
-                    _plugins.Plugins.FirstOrDefault(item => item.PluginName == "SecondAlgorithm").Run(_badBoy, _man);
+                    Plugins.Plugins.FirstOrDefault(item => item.PluginName == "SecondAlgorithm")?.Run(_badBoy, _man);
                     break;
                 default:
-                    _plugins.Plugins.FirstOrDefault(item => item.PluginName == "RandomAlgorithm").Run(_badBoy, _man);
+                    Plugins.Plugins.FirstOrDefault(item => item.PluginName == "RandomAlgorithm")?.Run(_badBoy, _man);
                      break;
             }
 

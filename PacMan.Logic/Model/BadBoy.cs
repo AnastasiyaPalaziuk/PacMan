@@ -1,9 +1,4 @@
 ﻿using PacMan.Logic.Abstract;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PacMan.Logic.Model
 {
@@ -11,7 +6,7 @@ namespace PacMan.Logic.Model
     {
         public int CurrentCoordinateY { get; set; }
         public int CurrentCoordinateX { get; set; }
-        private Board _board;
+        private readonly Board _board;
 
         private BoardElements _lastStep = BoardElements.Bonus;
         public BadBoy(Board board, int x,int y)

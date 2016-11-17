@@ -1,39 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.ComponentModel;
-using System.Threading;
+﻿using PacMan.Logic.Concrete;
 using PacMan.Logic.Model;
-using PacMan.Logic.Concrete;
-using NLog;
 
-namespace PacMan.UI.Concrete.Logic
+namespace PacMan.Logic.Logic
 {
     public class MoveMan
     {
-        private Man _man;
-        private Board _board;
-        private Bonus _bonus;
-        public Man Man
-        {
-            get
-            {
-                return _man;
-            }
-        }
+        private readonly Board _board;
+        private readonly Bonus _bonus;
+        public Man Man { get; }
 
 
-        public MoveMan(Board board, Grid canvasHost)
+        public MoveMan(Board board)
 
         {
             _board = board;
-            _man = new Man(board);
+            Man = new Man(board);
             _bonus = new Bonus();
             SetCoordinates();
-            _board.AddComponents(_man.CurrentCoordinateX, _man.CurrentCoordinateY, BoardElements.Man);
+            _board.AddComponents(Man.CurrentCoordinateX, Man.CurrentCoordinateY, BoardElements.Man);
            
         }
 
@@ -41,7 +25,7 @@ namespace PacMan.UI.Concrete.Logic
 
     public void AddBonusValue()
     {
-        _man.Score += _bonus.Value;
+        Man.Score += _bonus.Value;
         _board.QualityBonus--;
     }
     public void MoveAction(Side key)
@@ -50,16 +34,16 @@ namespace PacMan.UI.Concrete.Logic
             switch (key)
             {
                 case Side.Left:
-                    _man.StepLeft();
+                    Man.StepLeft();
                     break;
                 case Side.Right:
-                    _man.StepRight();
+                    Man.StepRight();
                     break;
                 case Side.Up:
-                    _man.StepUp();
+                    Man.StepUp();
                     break;
                 case Side.Down:
-                    _man.StepDown();
+                    Man.StepDown();
                     break;
             }
             NewCell();
@@ -69,53 +53,53 @@ namespace PacMan.UI.Concrete.Logic
         private void NewCell()
         {
 
-            _board.BoardElement[_man.CurrentCoordinateX, _man.CurrentCoordinateY] = BoardElements.Man;
-            ColorManager.ChangeElementColor(_man.CurrentCoordinateY, _man.CurrentCoordinateX, BoardElements.Man);
+            _board.BoardElement[Man.CurrentCoordinateX, Man.CurrentCoordinateY] = BoardElements.Man;
+            ColorManager.ChangeElementColor(Man.CurrentCoordinateY, Man.CurrentCoordinateX, BoardElements.Man);
         }
 
         private void OldCell()
         {
-            _board.BoardElement[_man.CurrentCoordinateX, _man.CurrentCoordinateY] = BoardElements.Way;
-            ColorManager.ChangeElementColor(_man.CurrentCoordinateY, _man.CurrentCoordinateX, BoardElements.Way);
+            _board.BoardElement[Man.CurrentCoordinateX, Man.CurrentCoordinateY] = BoardElements.Way;
+            ColorManager.ChangeElementColor(Man.CurrentCoordinateY, Man.CurrentCoordinateX, BoardElements.Way);
         }
       
         public int CurrentScore
         {
             get
             {
-                return _man.Score;
+                return Man.Score;
             }
             set
             {
-                _man.Score = value;
+                Man.Score = value;
             }
         }
         public void SetCoordinates()
         {
 
-            _man.CurrentCoordinateX = _board.Size / 2;
-            _man.CurrentCoordinateY = _board.Size / 2;
+            Man.CurrentCoordinateX = _board.Size / 2;
+            Man.CurrentCoordinateY = _board.Size / 2;
             
         }
         public int GetCurrentX()
         {
-            return _man.CurrentCoordinateX;
+            return Man.CurrentCoordinateX;
 
         }
         public int GetCurrentY()
         {
-            return _man.CurrentCoordinateY;
+            return Man.CurrentCoordinateY;
         }
 
         public int Lifes
         {
             get
             {
-                return _man.Life;
+                return Man.Life;
             }
             set
             {
-                _man.Life = value;
+                Man.Life = value;
             }
         }
 

@@ -1,33 +1,18 @@
-﻿using PacMan.UI.Concrete;
-using PacMan.UI.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using PacMan.UI.ViewModel;
 
 namespace PacMan.UI
 {
     /// <summary>
     /// Interaction logic for Menu.xaml
     /// </summary>
-    public partial class Menu : Window
+    public partial class Menu
     {
         public Menu()
         {
-            App.log.Trace("Запуск главного меню");    
+            App.Log.Trace("Запуск главного меню");    
             InitializeComponent();
-            DataContext = new MenuVM();
-            App.log.Trace("Меню запущенно");
+            DataContext = new MenuViewModel();
+            App.Log.Trace("Меню запущенно");
 
 
         }
