@@ -3,6 +3,8 @@ using PacMan.UI.View;
 using System;
 using System.Windows;
 using System.Windows.Input;
+using PacMan.Logic.Abstract;
+using PacMan.Logic.Concrete;
 
 namespace PacMan.UI.ViewModel
 {
@@ -17,8 +19,21 @@ namespace PacMan.UI.ViewModel
         private ICommand _dragMove;
         private ICommand _startGame;
         private ICommand _score;
+        private ICommand _selectAlgorithm;
+
 
         private readonly bool _canExecute;
+
+        public ICommand SelectAlgorithm => _selectAlgorithm ?? (_selectAlgorithm = new CommandHandler(AlgorithmsShow, _canExecute));
+
+        private static void AlgorithmsShow()
+        {
+
+            var currentWin = Application.Current.Windows[0];
+            var algorithms = new Algorithms();
+            currentWin?.Close();
+            algorithms.Show();
+        }
 
         public ICommand Exit => _exit ?? (_exit = new CommandHandler(ExitAction, _canExecute));
 

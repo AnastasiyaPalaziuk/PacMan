@@ -48,10 +48,11 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abstract\IAlgorithmPlugin.cs" />
     <Compile Include="Abstract\IMoveObject.cs" />
+    <Compile Include="Abstract\IAlgorithmPlugin.cs" />
     <Compile Include="Abstract\IPluginHost.cs" />
     <Compile Include="Concrete\ColorManager.cs" />
+    <Compile Include="Concrete\CurrentAlgorithm.cs" />
     <Compile Include="Concrete\LoaderPlugins.cs" />
     <Compile Include="Logic\GameLogic.cs" />
     <Compile Include="Logic\MoveBadBoy.cs" />

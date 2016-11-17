@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using PacMan.Logic.Concrete;
+﻿using PacMan.Logic.Concrete;
 using PacMan.Logic.Model;
 
 namespace PacMan.Logic.Logic
@@ -10,7 +9,6 @@ namespace PacMan.Logic.Logic
         private readonly Board _board;
         private readonly Man _man;
         //private Logger _log = LogManager.GetCurrentClassLogger(); 
-        private static readonly LoaderPlugins Plugins= new LoaderPlugins();
         public MoveBadBoy(Board board, Man man)
         {
             _board = board;
@@ -30,22 +28,10 @@ namespace PacMan.Logic.Logic
             ColorManager.ChangeElementColor(_badBoy.CurrentCoordinateY, _badBoy.CurrentCoordinateX, _badBoy.LastStep);
         }
 
-        public void Stepping(int i)
+        public void Stepping()
         {
              OldCell();
-            switch (i)
-            {
-                case 0:
-                    Plugins.Plugins.FirstOrDefault(item => item.PluginName == "FirstAlgorithm")?.Run(_badBoy,_man);
-                     break;
-                case 1:
-                    Plugins.Plugins.FirstOrDefault(item => item.PluginName == "SecondAlgorithm")?.Run(_badBoy, _man);
-                    break;
-                default:
-                    Plugins.Plugins.FirstOrDefault(item => item.PluginName == "RandomAlgorithm")?.Run(_badBoy, _man);
-                     break;
-            }
-
+            CurrentAlgorithm.Value.Run(_badBoy,_man);
             NewCell();
         }
 

@@ -94,7 +94,7 @@ namespace PacMan.Logic.Logic
                     Thread.Sleep(800);
                     for (var i = 0; i < BadBoyQuality; i++)
                     {
-                        _moveBadBoy[i].Stepping(i);
+                        _moveBadBoy[i].Stepping();
                         CheckCollision();
                     }
                 }

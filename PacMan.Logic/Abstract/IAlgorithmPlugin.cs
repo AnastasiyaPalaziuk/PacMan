@@ -2,8 +2,10 @@
 {
     public interface IPlugin
     {
-        string PluginName { get; } 
-        void Run(IMoveObject badBoy,IMoveObject man);
-        IPluginHost Host { get; set; } 
+        string PluginName { get; }
+        void Run(IMoveObject badBoy, IMoveObject man);
+        IPluginHost Host { get; set; }
     }
+
+
 }

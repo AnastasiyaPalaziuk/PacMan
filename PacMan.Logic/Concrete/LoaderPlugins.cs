@@ -21,12 +21,12 @@ namespace PacMan.Logic.Concrete
             var pluginFiles = Directory.GetFiles(path, "*.dll");
             Plugins = new List<IPlugin>();
 
-            foreach (string pluginPath in pluginFiles)
+            foreach (var pluginPath in pluginFiles)
             {
                 Type objType = null;
                 try
                 {
-                    Assembly assembly = Assembly.LoadFrom(pluginPath);
+                    var assembly = Assembly.LoadFrom(pluginPath);
                     if (assembly != null)
                     {
                         objType = assembly.GetType(Path.GetFileNameWithoutExtension(pluginPath) + ".Algorithm");

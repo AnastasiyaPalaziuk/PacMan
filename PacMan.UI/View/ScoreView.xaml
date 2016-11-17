@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PacMan.UI.View"
         mc:Ignorable="d"
         Title="ScoreView" Height="300" Width="250"  WindowStyle="None" AllowsTransparency="True" BorderBrush="Black" BorderThickness="1"
         Focusable="True" WindowStartupLocation="CenterScreen" Background="#E5141414">

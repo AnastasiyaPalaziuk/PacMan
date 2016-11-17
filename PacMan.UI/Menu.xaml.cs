@@ -1,4 +1,5 @@
-﻿using PacMan.UI.ViewModel;
+﻿using PacMan.Logic.Abstract;
+using PacMan.UI.ViewModel;
 
 namespace PacMan.UI
 {

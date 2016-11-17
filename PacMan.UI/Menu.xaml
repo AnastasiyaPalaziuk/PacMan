@@ -20,8 +20,16 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <Button x:Name="btn_StarGame" Content="Start" HorizontalAlignment="Left" Height="50" Margin="50,40,0,0" VerticalAlignment="Top" Width="250" Command="{Binding StartGame}"/>
-        <Button x:Name="btn_Score" Content="Score" HorizontalAlignment="Left" Height="50" Margin="50,110,0,0" VerticalAlignment="Top" Width="250" Command="{Binding Score}"/>
-        <Button x:Name="btn_Exit" Content="Exit" HorizontalAlignment="Left" Height="50" Margin="50,180,0,0" VerticalAlignment="Top" Width="250" Command="{Binding Exit}"/>
+        <Canvas Height="40" Width="40" Margin="0,6,308,222" Focusable="False" >
+            <Canvas.Background>
+                <ImageBrush ImageSource="/Image/Settings.png"></ImageBrush>
+            </Canvas.Background>
+            <Canvas.InputBindings>
+                <MouseBinding Command="{Binding SelectAlgorithm}" MouseAction="LeftClick"></MouseBinding>
+            </Canvas.InputBindings>
+        </Canvas>
+        <Button x:Name="BtnStarGame" Content="Start" HorizontalAlignment="Left" Height="50" Margin="50,40,0,0" VerticalAlignment="Top" Width="250" Command="{Binding StartGame}"/>
+        <Button x:Name="BtnScore" Content="Score" HorizontalAlignment="Left" Height="50" Margin="50,110,0,0" VerticalAlignment="Top" Width="250" Command="{Binding Score}"/>
+        <Button x:Name="BtnExit" Content="Exit" HorizontalAlignment="Left" Height="50" Margin="50,180,0,0" VerticalAlignment="Top" Width="250" Command="{Binding Exit}"/>
     </Grid>
 </Window>
