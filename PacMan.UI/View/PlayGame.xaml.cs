@@ -10,11 +10,9 @@ namespace PacMan.UI.View
         public PlayGame()
 
         {
-            App.Log.Trace("Запуск игры");
 
             InitializeComponent();
             DataContext = new PlayGameViewModel(CanvasHost);
-            App.Log.Trace("Игра запущенна");
 
         }
     }

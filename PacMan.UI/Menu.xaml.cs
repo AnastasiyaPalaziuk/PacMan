@@ -10,12 +10,8 @@ namespace PacMan.UI
     {
         public Menu()
         {
-            App.Log.Trace("Запуск главного меню");    
             InitializeComponent();
             DataContext = new MenuViewModel();
-            App.Log.Trace("Меню запущенно");
-
-
         }
 
 

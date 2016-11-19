@@ -19,7 +19,7 @@
             </Canvas.InputBindings>
         </Canvas>
 
-        <DataGrid Name="PlayersScore" Margin="25"  AutoGenerateColumns="True" CanUserAddRows="False" RowBackground="#E5250909" Foreground="White" BorderBrush="#FFD7DEE4" >
+        <DataGrid Name="PlayersScore" Margin="25"  AutoGenerateColumns="True" CanUserAddRows="False">
             
         </DataGrid>
     </Grid>
