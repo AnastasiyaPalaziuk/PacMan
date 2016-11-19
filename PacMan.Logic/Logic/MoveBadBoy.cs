@@ -1,5 +1,7 @@
-﻿using PacMan.Logic.Concrete;
+﻿using NLog;
+using PacMan.Logic.Concrete;
 using PacMan.Logic.Model;
+using System;
 
 namespace PacMan.Logic.Logic
 {
@@ -8,7 +10,7 @@ namespace PacMan.Logic.Logic
         private readonly BadBoy _badBoy;
         private readonly Board _board;
         private readonly Man _man;
-        //private Logger _log = LogManager.GetCurrentClassLogger(); 
+        private Logger _log = LogManager.GetCurrentClassLogger(); 
         public MoveBadBoy(Board board, Man man)
         {
             _board = board;
@@ -19,18 +21,34 @@ namespace PacMan.Logic.Logic
         private void NewCell()
         {
             _board.BoardElement[_badBoy.CurrentCoordinateX, _badBoy.CurrentCoordinateY] = BoardElements.BadBoy;
-            ColorManager.ChangeElementColor(_badBoy.CurrentCoordinateY, _badBoy.CurrentCoordinateX, BoardElements.BadBoy);
+            try
+            {
+                ColorManager.ChangeElementColor(_badBoy.CurrentCoordinateY, _badBoy.CurrentCoordinateX, BoardElements.BadBoy);
+            }
+            catch (NullReferenceException e)
+            {
+                _log.Error("Error change element`s color. \n{0}", e.Message);
+
+            }
         }
 
         private void OldCell()
         {
             _board.BoardElement[_badBoy.CurrentCoordinateX, _badBoy.CurrentCoordinateY] = _badBoy.LastStep;
-            ColorManager.ChangeElementColor(_badBoy.CurrentCoordinateY, _badBoy.CurrentCoordinateX, _badBoy.LastStep);
+            try
+            {
+                ColorManager.ChangeElementColor(_badBoy.CurrentCoordinateY, _badBoy.CurrentCoordinateX, _badBoy.LastStep);
+            }
+            catch (NullReferenceException e)
+            {
+                _log.Error("Error change element`s color. \n{0}", e.Message);
+
+            }
         }
 
-        public void Stepping()
+        public  void Stepping()
         {
-             OldCell();
+            OldCell();
             CurrentAlgorithm.Value.Run(_badBoy,_man);
             NewCell();
         }

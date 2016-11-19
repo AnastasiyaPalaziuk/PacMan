@@ -1,6 +1,7 @@
 ﻿using NLog;
 using PacMan.Logic.Concrete;
 using PacMan.Logic.Model;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Windows;
@@ -57,8 +58,8 @@ namespace PacMan.Logic.Logic
         }
         private void RunParallelThread()
         {
-            _thread = new Thread(GamesLoop) {Name = "Move Bad Boys"};
-            _log.Debug("Запуск потока {0}", _thread.Name);
+            _thread = new Thread(GamesLoop) { Name = "Move Bad Boys" };
+            _log.Debug("Start thread {0}", _thread.Name);
             _thread.Start();
 
         }
@@ -66,9 +67,6 @@ namespace PacMan.Logic.Logic
         {
 
             SetBoardComponents();
-
-
-
         }
         public bool IsPlay()
         {
@@ -80,7 +78,7 @@ namespace PacMan.Logic.Logic
                 return false;
             else
             {
-                _log.Trace("Изменения свойства Level");
+                _log.Trace("Change level: level = {0}",Level);
                 return true;
             }
         }
@@ -94,6 +92,7 @@ namespace PacMan.Logic.Logic
                     Thread.Sleep(800);
                     for (var i = 0; i < BadBoyQuality; i++)
                     {
+
                         _moveBadBoy[i].Stepping();
                         CheckCollision();
                     }
@@ -108,7 +107,7 @@ namespace PacMan.Logic.Logic
 
             _canvasHost.Dispatcher.Invoke(() =>
             {
-                _log.Trace("Старт добавления элементов на игральное поле");
+                _log.Trace("Start to adding elements to the board");
                 if (_gridIsUsed)
                 {
                     ClearGrid();
@@ -138,32 +137,42 @@ namespace PacMan.Logic.Logic
                 {
                     for (var i = 0; i < BoardSize; i++)
                     {
-                        var c = new Canvas {Background = ColorManager.ChangeColor(_board.BoardElement[i, j])};
-                        Grid.SetColumn(c, i);
-                        Grid.SetRow(c, j);
-                        _canvasHost.Children.Add(c);
+                        try
+                        {
+                            var c = new Canvas { Background = ColorManager.ChangeColor(_board.BoardElement[i, j]) };
+                            Grid.SetColumn(c, i);
+                            Grid.SetRow(c, j);
+                            _canvasHost.Children.Add(c);
+                        }
+                        catch (NullReferenceException e)
+                        {
+                            _log.Error("Error adding elements to the board. \n{0}",e.InnerException.Message);
+                            _board.QualityBonus = -1;
+                            return;
+                        }
                     }
 
                 }
-                _log.Trace("Элементы добавлены");
+                _log.Trace("All elements was add");
 
             });
         }
         private void ClearGrid()
         {
 
-            _log.Trace("Старт очистки игрального поля");
+            _log.Trace("Start to clear the board");
 
             for (var i = 0; i < BoardSize; i++)
             {
                 for (var j = 0; j < BoardSize; j++)
                 {
+                    
                     _canvasHost.Children.Remove(_canvasHost.Children
                         .Cast<UIElement>()
                         .FirstOrDefault(item => Grid.GetColumn(item) == j && Grid.GetRow(item) == i));
                 }
             }
-            _log.Trace("игральное поле очищенно");
+            _log.Trace("The board was clear.");
 
         }
         private void CheckCollision()
@@ -172,18 +181,25 @@ namespace PacMan.Logic.Logic
             {
                 if (_moveBadBoy[i].GetCurrentX() != _moveMan.GetCurrentX() ||
                     _moveBadBoy[i].GetCurrentY() != _moveMan.GetCurrentY()) continue;
+
                 if (_moveBadBoy[i].LastStep == BoardElements.Bonus)
                 {
                     _moveMan.AddBonusValue();
                     _moveBadBoy[i].LastStep = BoardElements.Way;
                 }
                 if (_moveBadBoy[i].LastStep == BoardElements.Man) _moveBadBoy[i].LastStep = BoardElements.Way;
-                _log.Trace("Изменение свойства Lifes");
 
                 _moveMan.Lifes--;
                 _moveMan.SetCoordinates();
                 _board.AddComponents(_moveMan.GetCurrentX(), _moveMan.GetCurrentY(), BoardElements.Man);
-                ColorManager.ChangeElementColor(_moveMan.GetCurrentX(), _moveMan.GetCurrentY(), BoardElements.Man);
+                try
+                {
+                    ColorManager.ChangeElementColor(_moveMan.GetCurrentX(), _moveMan.GetCurrentY(), BoardElements.Man);
+                }
+                catch (NullReferenceException e)
+                {
+                    _log.Error("Error change element`s color. \n{0}", e.InnerException.Message);
+                }
             }
         }
 
@@ -194,8 +210,8 @@ namespace PacMan.Logic.Logic
         }
         public void KillThread()
         {
-            _log.Debug("Убит поток {0}", _thread.Name);
-            _thread.Abort(); 
+            _log.Debug("Abort thread {0}", _thread.Name);
+            _thread.Abort();
         }
     }
 }

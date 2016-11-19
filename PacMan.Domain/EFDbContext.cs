@@ -7,7 +7,6 @@ namespace PacMan.Domain
         public EfDbContext() : base("ScoreDbConnection")
         {
         }
-
         public DbSet<Player> Players { get; set; }
         
     }

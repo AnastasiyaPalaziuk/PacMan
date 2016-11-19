@@ -1,5 +1,7 @@
 ﻿using PacMan.Logic.Concrete;
 using PacMan.Logic.Model;
+using NLog;
+using System;
 
 namespace PacMan.Logic.Logic
 {
@@ -7,6 +9,7 @@ namespace PacMan.Logic.Logic
     {
         private readonly Board _board;
         private readonly Bonus _bonus;
+        private Logger _log = LogManager.GetCurrentClassLogger();
         public Man Man { get; }
 
 
@@ -54,13 +57,30 @@ namespace PacMan.Logic.Logic
         {
 
             _board.BoardElement[Man.CurrentCoordinateX, Man.CurrentCoordinateY] = BoardElements.Man;
-            ColorManager.ChangeElementColor(Man.CurrentCoordinateY, Man.CurrentCoordinateX, BoardElements.Man);
+            try
+            {
+                ColorManager.ChangeElementColor(Man.CurrentCoordinateY, Man.CurrentCoordinateX, BoardElements.Man);
+            }
+            catch (NullReferenceException e)
+            {
+                _log.Error("Error change element`s color. \n{0}", e.Message);
+
+            }
+
         }
 
         private void OldCell()
         {
             _board.BoardElement[Man.CurrentCoordinateX, Man.CurrentCoordinateY] = BoardElements.Way;
-            ColorManager.ChangeElementColor(Man.CurrentCoordinateY, Man.CurrentCoordinateX, BoardElements.Way);
+            try
+            {
+                ColorManager.ChangeElementColor(Man.CurrentCoordinateY, Man.CurrentCoordinateX, BoardElements.Way);
+            }
+            catch (NullReferenceException e)
+            {
+                _log.Error("Error change element`s color. \n{0}", e.Message);
+
+            }
         }
       
         public int CurrentScore

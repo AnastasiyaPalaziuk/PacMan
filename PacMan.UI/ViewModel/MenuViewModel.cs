@@ -39,14 +39,14 @@ namespace PacMan.UI.ViewModel
 
         private static void ExitAction()
         {
-            App.Log.Trace("Выход из программы");
+            App.Log.Trace("Exit from the program");
            Environment.Exit(0);
         }
         public ICommand DragMove => _dragMove ?? (_dragMove = new CommandHandler(DragMoveAction, _canExecute));
 
         private static void DragMoveAction()
         {
-            App.Log.Trace("Перемещение окна по экрану");
+            App.Log.Trace("Moving the \"Menu\" window on the screen");
            var currentWin = Application.Current.Windows[0];
             currentWin?.DragMove();
         }
@@ -60,9 +60,9 @@ namespace PacMan.UI.ViewModel
             
 
             var start = new PlayGame();
-            App.Log.Trace("Главное меню закрывается");
+            App.Log.Trace("\"Menu\" was closed");
             currentWin?.Close();
-            App.Log.Trace("Отображение окна игры");
+            App.Log.Trace("\"Menu\" was closed");
             start.Show();
            
         }
@@ -72,11 +72,10 @@ namespace PacMan.UI.ViewModel
         private static void ShowAction()
         {
             var currentWin = Application.Current.Windows[0];
-            App.Log.Trace("Главное меню закрывается");
+            App.Log.Trace("\"Menu\" was closed");
 
             var scoreView = new ScoreView();
-            App.Log.Trace("Отображение окна Score");
-
+            App.Log.Trace("\"Score\" was closed");
             currentWin?.Close();
             scoreView.Show();
             

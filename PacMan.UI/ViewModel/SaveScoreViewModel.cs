@@ -35,7 +35,7 @@ namespace PacMan.UI.ViewModel
 
             var currentWin = Application.Current.Windows[0];
             currentWin?.DragMove();
-            App.Log.Trace("Перемещение окна Save Score по экрану");
+            App.Log.Trace("moving the \"SavaScore\" window on the screen");
 
         }
 

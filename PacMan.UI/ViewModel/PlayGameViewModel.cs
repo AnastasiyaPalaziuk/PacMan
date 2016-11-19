@@ -40,7 +40,7 @@ namespace PacMan.UI.ViewModel
 
         private static void DragMoveAction()
         {
-            App.Log.Trace("Перемещение окна PlayGame по экрану");
+            App.Log.Trace("Moving the \"PlayGame\" window on the screen");
 
             var currentWin = System.Windows.Application.Current.Windows[0];
             currentWin?.DragMove();
@@ -55,13 +55,13 @@ namespace PacMan.UI.ViewModel
         }
         private void ExitAction()
         {
-            App.Log.Trace("Игра окончена");
+            App.Log.Trace("Game Over");
             _saveScore.Dispatcher.Invoke(() =>
             {
                 _saveScore = new SaveScore(_game.Score);
                 _game.KillThread();
                 _thread.Abort();
-                App.Log.Debug("Убит поток {0}", _thread.Name);
+                App.Log.Debug("Abort thread{0}", _thread.Name);
                 var currentWin = System.Windows.Application.Current.Windows;
                 _saveScore.Show();
                 currentWin[0]?.Close();
@@ -80,7 +80,7 @@ namespace PacMan.UI.ViewModel
         private bool _isUsed;
         private void GamesLoop()
         {
-            App.Log.Trace("Запуск жизненного цикла игры");
+            App.Log.Trace("Start game's loop");
             _game.StartGame();
             DisplayLevel();
             _thread = new Thread(() =>
@@ -100,14 +100,14 @@ namespace PacMan.UI.ViewModel
                 }
                 ExitAction();
             }) {Name = "Game`s Loop"};
-            App.Log.Debug("Старт потока {0}",_thread.Name);
+            App.Log.Debug("Start thread {0}",_thread.Name);
 
             _thread.Start();
            
         }
         private void DisplayLevel()
         {
-            App.Log.Trace("Отображение текущего уровня игры");
+            App.Log.Trace("Display current level");
 
             if (_level == null)
             {
@@ -127,7 +127,7 @@ namespace PacMan.UI.ViewModel
                     _level.Close();
                 });
             }
-            App.Log.Trace("Окно текущего уровня закрыто");
+            App.Log.Trace("Close window with current level");
         }
 
         #region Commands for move Man

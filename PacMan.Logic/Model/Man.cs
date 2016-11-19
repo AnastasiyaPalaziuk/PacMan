@@ -50,7 +50,7 @@ namespace PacMan.Logic.Model
             if (CurrentCoordinateX != 0 && CheckCell(_board.BoardElement[CurrentCoordinateX - 1, CurrentCoordinateY]))
             {
                 CurrentCoordinateX--;
-                _log.Trace("Шаг влево главного героя");
+                _log.Trace("PacMan make one step to the left");
 
                 return true;
             }
@@ -63,7 +63,7 @@ namespace PacMan.Logic.Model
             {
 
                 CurrentCoordinateX++;
-                _log.Trace("Шаг вправо главного героя");
+                _log.Trace("PacMan make one step to the right");
 
                 return true;
             }
@@ -75,7 +75,7 @@ namespace PacMan.Logic.Model
             if (CurrentCoordinateY != _board.Size - 1 && CheckCell(_board.BoardElement[CurrentCoordinateX, CurrentCoordinateY + 1]))
             {
                 CurrentCoordinateY++;
-                _log.Trace("Шаг вниз главного героя");
+                _log.Trace("PacMan make one step to the down");
                 return true;
             }
             return false;
@@ -86,7 +86,7 @@ namespace PacMan.Logic.Model
             if (CurrentCoordinateY != 0 && CheckCell(_board.BoardElement[CurrentCoordinateX, CurrentCoordinateY - 1]))
             {
                 CurrentCoordinateY--;
-                _log.Trace("Шаг вверх главного героя");
+                _log.Trace("PacMan make one step to the Up");
                 return true;
             }
             return false;

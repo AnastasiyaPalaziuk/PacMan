@@ -28,7 +28,7 @@ namespace PacMan.Logic.Model
                 case BoardElements.Bonus:
                     break;
                 case BoardElements.BadBoy:
-                    break;
+                    return false;
                 case BoardElements.Man:
                     break;
                 case BoardElements.Wall: return false;

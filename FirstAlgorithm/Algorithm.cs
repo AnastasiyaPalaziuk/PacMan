@@ -21,7 +21,7 @@ namespace FirstAlgorithm
         {
             if (badBoy.CurrentCoordinateX != man.CurrentCoordinateX)
             {
-                if (badBoy.CurrentCoordinateX >man.CurrentCoordinateX)
+                if (badBoy.CurrentCoordinateX > man.CurrentCoordinateX)
                 {
                     if (!badBoy.StepLeft())
                     {

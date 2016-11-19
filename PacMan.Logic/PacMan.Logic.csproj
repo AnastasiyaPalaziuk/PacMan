@@ -54,6 +54,7 @@
     <Compile Include="Concrete\ColorManager.cs" />
     <Compile Include="Concrete\CurrentAlgorithm.cs" />
     <Compile Include="Concrete\LoaderPlugins.cs" />
+    <Compile Include="Exceptions\PluginsNotFoundException.cs" />
     <Compile Include="Logic\GameLogic.cs" />
     <Compile Include="Logic\MoveBadBoy.cs" />
     <Compile Include="Logic\MoveMan.cs" />

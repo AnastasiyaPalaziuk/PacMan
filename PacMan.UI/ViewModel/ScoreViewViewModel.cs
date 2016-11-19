@@ -17,7 +17,6 @@ namespace PacMan.UI.ViewModel
         public ScoreViewViewModel(DataGrid playersScore)
         {
             _playersScore = playersScore;
-           // _PlayersScore.RowBackground = (Color)ColorConverter.ConvertFromString("#E5250909");
             _canExecute = true;
             RelationshipDbAndDataGrid();
         }
@@ -25,7 +24,6 @@ namespace PacMan.UI.ViewModel
         private void RelationshipDbAndDataGrid()
         {
             var context = new EfPlayerRepository();
-            //int length = context.Players.Count<Player>();
             var sortedPlayers = from player in context.Players
                                 orderby player.Score descending
                                 select new { player.Name, player.Score};

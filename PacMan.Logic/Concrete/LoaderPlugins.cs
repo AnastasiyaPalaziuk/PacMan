@@ -1,5 +1,6 @@
 ﻿using NLog;
 using PacMan.Logic.Abstract;
+using PacMan.Logic.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -40,15 +41,19 @@ namespace PacMan.Logic.Concrete
                 {
                     if (objType != null)
                     {
-                        _log.Info("Загрузка плагина {0}", ((IPlugin)Activator.CreateInstance(objType)).PluginName);
+                        _log.Info("Loading the plugin {0}", ((IPlugin)Activator.CreateInstance(objType)).PluginName);
                         Plugins.Add((IPlugin)Activator.CreateInstance(objType));
                         Plugins[Plugins.Count - 1].Host = this;
                     }
                 }
-                catch
+                catch(Exception e)
                 {
-                    // ignored
+                    _log.Error("Plugin can't to be load: {0}",e.Message);
                 }
+            }
+            if (Plugins.Equals(null))
+            {
+                throw new PluginsNotFoundException();
             }
         }
 

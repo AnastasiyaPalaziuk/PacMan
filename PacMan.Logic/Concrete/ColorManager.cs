@@ -1,4 +1,5 @@
 ﻿using PacMan.Logic.Model;
+using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,10 +10,7 @@ namespace PacMan.Logic.Concrete
     public static class ColorManager
     {
         private static Grid _canvasHost;
-        //public ColorManager(Grid CanvasHost)
-        //{
-        //    _CanvasHost = CanvasHost;
-        //}
+
         public static void SetCanvasHost(Grid canvasHost)
         {
             _canvasHost = canvasHost;
@@ -22,15 +20,12 @@ namespace PacMan.Logic.Concrete
             _canvasHost.Dispatcher
             .Invoke(() =>
                 {
-                    if (_canvasHost.Children.Cast<UIElement>()
-                            .FirstOrDefault(item => Grid.GetColumn(item) == j && Grid.GetRow(item) == i) == null)
-                        return;
-                    {
-                        var canvas = (Canvas) _canvasHost.Children.Cast<UIElement>()
-                            .FirstOrDefault(item => Grid.GetColumn(item) == j && Grid.GetRow(item) == i);
-                        if (canvas != null)
-                            canvas.Background = ChangeColor(boardElement);
-                    }
+
+                    var canvas = (Canvas)_canvasHost.Children.Cast<UIElement>()
+                        .FirstOrDefault(item => Grid.GetColumn(item) == j && Grid.GetRow(item) == i);
+                    if (canvas != null)
+                        canvas.Background = ChangeColor(boardElement);
+                    else throw new NullReferenceException("Element with coordinates x="+i+" y="+j+"not found");
                 });
         }
 
